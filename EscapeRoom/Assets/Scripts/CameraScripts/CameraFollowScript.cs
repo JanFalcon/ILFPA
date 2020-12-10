@@ -23,6 +23,11 @@ public class CameraFollowScript : MonoBehaviour
 
     void Update()
     {
+        if (!target)
+        {
+            return;
+        }
+
         if (Vector2.Distance(target.position, transform.position) >= deadZoneRadius)
         {
             chaseTarget = true;
