@@ -19,6 +19,6 @@ public class TimerScript : MonoBehaviour
     private void LateUpdate()
     {
         timer = gameManager.GetTimer();
-        timerText.SetText(string.Format("{0:0.0}", timer));
+        timerText.SetText(string.Format("Timer : {0:0.0}", timer));
     }
 }
