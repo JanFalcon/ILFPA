@@ -13,7 +13,15 @@ public class ObjectSortingOrder : MonoBehaviour
 
     public bool update = false;
 
+    private Collider2D[] col;
+    private bool once = false;
+
     private readonly WaitForSeconds updateTime = new WaitForSeconds(0.05f);
+    private void Awake()
+    {
+        col = GetComponents<Collider2D>();
+    }
+
     void Start()
     {
         spriteRenderer = GetComponent<Renderer>();
@@ -29,11 +37,25 @@ public class ObjectSortingOrder : MonoBehaviour
     {
         if (update)
         {
-            StartCoroutine(UpdateSortingOrder());
+            UpdateSortingOrder();
         }
     }
 
-    private IEnumerator UpdateSortingOrder()
+    public void UpdateSortingOrder()
+    {
+        StartCoroutine(UpdateSortingOrderEnum());
+
+        if(col[0] && defaultSortingLayer > 0 && !once)
+        {
+            foreach(Collider2D col in this.col)
+            {
+                col.isTrigger = true;
+            }
+            once = true;
+        }
+    }
+
+    private IEnumerator UpdateSortingOrderEnum()
     {
         yield return updateTime;
         YPOSITION = (int)((transform.position.y + offset.y) * -100) + defaultSortingLayer;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    public GameObject interactUI;
+    private GameObject interactUI;
 
     public float detectionRadius = 1f;
     public float updatePerSecond = 10f;
@@ -14,8 +14,21 @@ public class PlayerInteract : MonoBehaviour
     private readonly int bitMask = 1 << 9;  //Interactable Layer
     public bool InArea { get; set; } = false;
 
+    private PlayerMovementScript playerMovement;
+
     private IInteractable interact;
     private bool interacting = false;
+
+    private void Awake()
+    {
+        interactUI = GameObject.FindGameObjectWithTag("InteractUI");
+        interactUI.SetActive(false);
+    }
+
+    private void Start()
+    {
+        playerMovement = GetComponent<PlayerMovementScript>();
+    }
 
     private void Update()
     {
@@ -45,13 +58,9 @@ public class PlayerInteract : MonoBehaviour
                 {
                     if (!interacting)
                     {
+                        playerMovement.enabled = false;
                         interact.Interact();
                         interacting = true;
-                    }
-                    else
-                    {
-                        interact.Close();
-                        interacting = false;
                     }
                 }
             }
@@ -61,17 +70,33 @@ public class PlayerInteract : MonoBehaviour
             if (InArea)
             {
                 InArea = false;
-                interacting = false;
                 interactUI.SetActive(false);
 
-                if (interact != null)
+                if(interact != null)
                 {
                     interact.Highlight(false);
                     interact.Close();
                     interact = null;
                 }
+
             }
         }
+    }
+
+    public void Close()
+    {
+        InArea = false;
+        interacting = false;
+        interactUI.SetActive(false);
+
+        if (interact != null)
+        {
+            interact.Highlight(false);
+            interact.Close();
+            interact = null;
+        }
+
+        playerMovement.enabled = true;
     }
 
     public Vector2 GetTalkingTo()

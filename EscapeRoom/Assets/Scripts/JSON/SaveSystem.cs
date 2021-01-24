@@ -1,25 +1,119 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-[System.Serializable]
-public class SaveSystem
+public class SaveSystem : MonoBehaviour
 {
-    public GameObject item;
+    public static SaveSystem instance;
 
-    public string ToJson()
+    private void Awake()
     {
-        return JsonUtility.ToJson(this);
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
-    public void LoadFromJson(string json)
+    public event Action LoadEvent;
+
+    //To be changed
+    private string SavePath() => Application.persistentDataPath + "/SaveData/Save.txt";
+
+    [ContextMenu("Save")]
+    public void Save()
     {
-        JsonUtility.FromJsonOverwrite(json, this);
+        //Dictionary<string, object> saveData = LoadFile();
+        Dictionary<string, object> saveData = new Dictionary<string, object>();
+        CaptureState(saveData);
+        SaveFile(saveData);
+
+        Debug.Log("Save Successful");
     }
+
+    [ContextMenu("Load")]
+    public void Load()
+    {
+        LoadEvent?.Invoke();
+
+        Dictionary<string, object> saveData = LoadFile();
+
+        //To be changed
+        LoadState(saveData);
+
+        Debug.Log("Load Successful");
+    }
+
+    private void SaveFile(object state)
+    {
+        BinaryFormatter formatter = GetBinaryFormatter();
+
+        if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
+        }
+
+        FileStream file = File.Create(SavePath());
+        formatter.Serialize(file, state);
+        file.Close();
+    }
+
+    public Dictionary<string, object> LoadFile()
+    {
+        if (!File.Exists(SavePath()))
+        {
+            return new Dictionary<string, object>();
+        }
+
+        BinaryFormatter formatter = GetBinaryFormatter();
+        FileStream file = File.Open(SavePath(), FileMode.Open);
+
+        try
+        {
+            object save = formatter.Deserialize(file);
+            file.Close();
+            return (Dictionary<string, object>)save;
+        }
+        catch
+        {
+            Debug.Log("Failed to load file at " + SavePath());
+            file.Close();
+            return new Dictionary<string, object>();
+        }
+    }
+
+    public static BinaryFormatter GetBinaryFormatter()
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        return formatter;
+    }
+
+    public void CaptureState(Dictionary<string, object> state)
+    {
+        foreach (SaveableEntity saveEntity in FindObjectsOfType<SaveableEntity>())
+        {
+            //state.Add(saveEntity.id, saveEntity.CaptureState());
+            state[saveEntity.id] = saveEntity.CaptureState();
+        }
+    }
+
+    public void LoadState(Dictionary<string, object> state)
+    {
+        SaveableEntity playerEntity = GameObject.FindGameObjectWithTag("Player").GetComponent<SaveableEntity>();
+
+        foreach (KeyValuePair<string, object> item in state)
+        {
+            if(state.TryGetValue(item.Key, out object loadState)){
+                GameObject itemValue = playerEntity.LoadObjects(loadState);
+                foreach(ISaveable saveable in itemValue.GetComponents<ISaveable>())
+                {
+                    saveable.LoadState(loadState);
+                }
+            }
+        }
+    }
+
 }
 
-public interface ISaveable
-{
-    void PopulateSaveSystem(SaveSystem saveData);
-    void LoadFromSaveSystem(SaveSystem saveData);
-}
