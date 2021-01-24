@@ -61,7 +61,7 @@ TextureImporter:
     second: Tileset_16x16_1_18
   - first:
       213: 2597913498176262997
-    second: Tileset_16x16_1_19
+    second: LeftWall
   - first:
       213: 2239895611946741077
     second: Tileset_16x16_1_20
@@ -70,7 +70,7 @@ TextureImporter:
     second: Tileset_16x16_1_21
   - first:
       213: 7997878318394415892
-    second: Tileset_16x16_1_22
+    second: RightWall
   - first:
       213: 956845163678922490
     second: Tileset_16x16_1_23
@@ -142,7 +142,7 @@ TextureImporter:
     second: Tileset_16x16_1_45
   - first:
       213: 3008108694624952794
-    second: Tileset_16x16_1_46
+    second: newGround
   - first:
       213: 7832916956710185930
     second: Tileset_16x16_1_47
@@ -221,6 +221,9 @@ TextureImporter:
   - first:
       213: 6925565004464217376
     second: Tileset_16x16_1_72
+  - first:
+      213: -3317658100664502334
+    second: Wall
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -348,7 +351,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 144
+        y: 128
         width: 16
         height: 16
       alignment: 0
@@ -389,8 +392,8 @@ TextureImporter:
       name: Tileset_16x16_1_2
       rect:
         serializedVersion: 2
-        x: 16
-        y: 128
+        x: 15
+        y: 143
         width: 16
         height: 16
       alignment: 8
@@ -432,7 +435,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 128
+        y: 127
         width: 16
         height: 16
       alignment: 0
@@ -743,13 +746,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset_16x16_1_19
+      name: LeftWall
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
-        width: 16
-        height: 16
+        x: 9
+        y: 80
+        width: 7
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -806,13 +809,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset_16x16_1_22
+      name: RightWall
       rect:
         serializedVersion: 2
         x: 48
-        y: 96
-        width: 16
-        height: 16
+        y: 80
+        width: 7
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -932,27 +935,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset_16x16_1_28
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 781766516491d9af0800000000000000
-      internalID: -388126204086554233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Tileset_16x16_1_29
       rect:
         serializedVersion: 2
@@ -990,27 +972,6 @@ TextureImporter:
       bones: []
       spriteID: 1edc62fafb9a30560800000000000000
       internalID: 7278848063503257057
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tileset_16x16_1_31
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48e8d9cbb30e89520800000000000000
-      internalID: 2709161723035487876
       vertices: []
       indices: 
       edges: []
@@ -1310,13 +1271,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset_16x16_1_46
+      name: newGround
       rect:
         serializedVersion: 2
-        x: 80
-        y: 48
-        width: 16
-        height: 16
+        x: 79
+        y: 32
+        width: 33
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1326,27 +1287,6 @@ TextureImporter:
       bones: []
       spriteID: ad162ec8be2feb920800000000000000
       internalID: 3008108694624952794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tileset_16x16_1_47
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: acb28d7b87c14bc60800000000000000
-      internalID: 7832916956710185930
       vertices: []
       indices: 
       edges: []
@@ -1515,48 +1455,6 @@ TextureImporter:
       bones: []
       spriteID: 0b65b60e754499cb0800000000000000
       internalID: -4856775578924394832
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tileset_16x16_1_56
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2654a187126a39d50800000000000000
-      internalID: 6742915729782883682
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tileset_16x16_1_57
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 078615d793a20fbf0800000000000000
-      internalID: -292687549375092624
       vertices: []
       indices: 
       edges: []
@@ -1872,6 +1770,27 @@ TextureImporter:
       bones: []
       spriteID: 02d57f7adac8c1060800000000000000
       internalID: 6925565004464217376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 113
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c7f1bff88f45f1d0800000000000000
+      internalID: -3317658100664502334
       vertices: []
       indices: 
       edges: []

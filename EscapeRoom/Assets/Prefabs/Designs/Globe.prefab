@@ -174,6 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8649286801179222886}
   - component: {fileID: 786224284292320593}
+  - component: {fileID: -2089430339946388816}
   m_Layer: 0
   m_Name: Globe
   m_TagString: Untagged
@@ -248,3 +249,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2089430339946388816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8839461640031322535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7b48e9f88cc68488664fee17e4eafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+  gameItem: 0

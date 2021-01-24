@@ -49,7 +49,7 @@ TextureImporter:
     second: Interiors_free_16x16_14
   - first:
       213: -1038823041853978630
-    second: Interiors_free_16x16_15
+    second: Scriblings
   - first:
       213: -6165030603869358407
     second: Interiors_free_16x16_16
@@ -64,7 +64,7 @@ TextureImporter:
     second: Door_Open
   - first:
       213: 986538861227260245
-    second: Interiors_free_16x16_20
+    second: openDoor
   - first:
       213: -811139691903721122
     second: Interiors_free_16x16_21
@@ -271,7 +271,7 @@ TextureImporter:
     second: Interiors_free_16x16_88
   - first:
       213: -1721316157446984292
-    second: Interiors_free_16x16_89
+    second: Bed
   - first:
       213: -4283709005726994332
     second: Interiors_free_16x16_90
@@ -289,7 +289,7 @@ TextureImporter:
     second: Interiors_free_16x16_94
   - first:
       213: -1680548778490234108
-    second: Closet1
+    second: Drawer
   - first:
       213: -1271616306398602407
     second: Interiors_free_16x16_96
@@ -304,7 +304,7 @@ TextureImporter:
     second: Interiors_free_16x16_99
   - first:
       213: -6560201869980972056
-    second: Interiors_free_16x16_100
+    second: WorldMap
   - first:
       213: 1442725450242299571
     second: Candle
@@ -331,7 +331,7 @@ TextureImporter:
     second: Book_Shelf
   - first:
       213: -8108319412781175514
-    second: Interiors_free_16x16_109
+    second: IronDoors
   - first:
       213: 3406493811904100958
     second: Interiors_free_16x16_110
@@ -968,13 +968,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Interiors_free_16x16_15
+      name: Scriblings
       rect:
         serializedVersion: 2
-        x: 242
-        y: 763
-        width: 12
-        height: 9
+        x: 243
+        y: 764
+        width: 10
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1073,12 +1073,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Interiors_free_16x16_20
+      name: openDoor
       rect:
         serializedVersion: 2
         x: 144
         y: 736
-        width: 16
+        width: 32
         height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -2522,13 +2522,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Interiors_free_16x16_89
+      name: Bed
       rect:
         serializedVersion: 2
         x: 197
-        y: 384
+        y: 385
         width: 20
-        height: 32
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2648,13 +2648,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Closet1
+      name: Drawer
       rect:
         serializedVersion: 2
-        x: 21
-        y: 328
-        width: 23
-        height: 32
+        x: 22
+        y: 329
+        width: 21
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2753,7 +2753,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Interiors_free_16x16_100
+      name: WorldMap
       rect:
         serializedVersion: 2
         x: 192
@@ -2942,7 +2942,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Interiors_free_16x16_109
+      name: IronDoors
       rect:
         serializedVersion: 2
         x: 13

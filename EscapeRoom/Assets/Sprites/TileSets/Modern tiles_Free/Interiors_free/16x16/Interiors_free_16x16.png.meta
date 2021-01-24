@@ -2083,7 +2083,7 @@ TextureImporter:
     second: BBoard3
   - first:
       213: -9121022282570476539
-    second: BBoard4
+    second: Green_Board
   - first:
       213: 3177366218825533783
     second: Locker2
@@ -16412,8 +16412,8 @@ TextureImporter:
       name: Interiors_free_16x16_674
       rect:
         serializedVersion: 2
-        x: 128
-        y: 48
+        x: 130
+        y: 46
         width: 16
         height: 16
       alignment: 0
@@ -16446,48 +16446,6 @@ TextureImporter:
       bones: []
       spriteID: b31a599fb2b191090800000000000000
       internalID: -8063383782145285829
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BBoard1
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 48
-        width: 16
-        height: 16
-      alignment: 8
-      pivot: {x: 1, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0fbfed02f2b99eae0800000000000000
-      internalID: -1519512772543579152
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BBoard2
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 48
-        width: 16
-        height: 16
-      alignment: 6
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4187ff96946c9aea0800000000000000
-      internalID: -5860935421432727532
       vertices: []
       indices: 
       edges: []
@@ -16787,36 +16745,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BBoard3
+      name: Green_Board
       rect:
         serializedVersion: 2
         x: 160
-        y: 32
-        width: 16
-        height: 16
-      alignment: 3
-      pivot: {x: 1, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4aa37e6eba61546b0800000000000000
-      internalID: -5312815257844499804
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BBoard4
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 32
-        width: 16
-        height: 16
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        y: 39
+        width: 32
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

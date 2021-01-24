@@ -2,18 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentBuilderScript : MonoBehaviour, ISaveable
+public class EnvironmentBuilderScript : MonoBehaviour
 {
-    //Interface
-    public void LoadFromSaveSystem(SaveSystem saveData)
-    {
-        
-    }
-
-    public void PopulateSaveSystem(SaveSystem saveData)
-    {
-        saveData.item = null;
-    }
 
     public void SaveJsonData()
     {
