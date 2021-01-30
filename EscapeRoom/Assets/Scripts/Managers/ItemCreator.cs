@@ -9,6 +9,8 @@ public class ItemCreator : MonoBehaviour
     public GameObject player;
 
     public GameObject itemSlot;
+    public GameObject bookUI, blackBoardUI, greenBoardUI;
+
     public GameObject book, letter;
 
     public GameObject greenBoard, blackBoard;
@@ -78,6 +80,10 @@ public class ItemCreator : MonoBehaviour
             case Item.GameItem.NewGround:       return newGround;
 
             case Item.GameItem.Player:          return player;
+
+            case Item.GameItem.BookUI:          return bookUI;
+            case Item.GameItem.BlackBoardUI:    return blackBoardUI;
+            case Item.GameItem.GreenBoardUI:    return greenBoardUI;
             default:
                 Debug.Log("No such thing..");   return null;
         }

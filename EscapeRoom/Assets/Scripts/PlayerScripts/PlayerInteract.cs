@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    private GameObject interactUI;
+    public GameObject interactUI;
+    private GameObject _interactUI;
 
     public float detectionRadius = 1f;
-    public float updatePerSecond = 10f;
-
-    private Vector2 talkingTo;
 
     private readonly int bitMask = 1 << 9;  //Interactable Layer
     public bool InArea { get; set; } = false;
@@ -21,8 +19,18 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        interactUI = GameObject.FindGameObjectWithTag("InteractUI");
-        interactUI.SetActive(false);
+        _interactUI = GameObject.FindGameObjectWithTag("InteractUI");
+        if (!_interactUI)
+        {
+            InstantiateUI();
+        }
+        _interactUI.SetActive(false);
+    }
+
+    public void InstantiateUI()
+    {
+        Transform canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+        _interactUI = Instantiate(interactUI, canvas);
     }
 
     private void Start()
@@ -41,17 +49,14 @@ public class PlayerInteract : MonoBehaviour
             {
                 interact = col.GetComponent<IInteractable>();
             }
-
             //Highlight gameobject
-            if (interact != null && !InArea)
+            if (!InArea && interact != null)
             {
+                _interactUI.SetActive(true);
                 interact.Highlight(true);
             }
+            InArea = true;                                                          
 
-            InArea = true;                                                          //can be removed
-            talkingTo = (Vector2)col.transform.position;                            //can be removed
-
-            interactUI.SetActive(true);
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (interact != null)
@@ -69,16 +74,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (InArea)
             {
-                InArea = false;
-                interactUI.SetActive(false);
-
-                if(interact != null)
-                {
-                    interact.Highlight(false);
-                    interact.Close();
-                    interact = null;
-                }
-
+                Close();
             }
         }
     }
@@ -87,7 +83,7 @@ public class PlayerInteract : MonoBehaviour
     {
         InArea = false;
         interacting = false;
-        interactUI.SetActive(false);
+        _interactUI.SetActive(false);
 
         if (interact != null)
         {
@@ -97,11 +93,6 @@ public class PlayerInteract : MonoBehaviour
         }
 
         playerMovement.enabled = true;
-    }
-
-    public Vector2 GetTalkingTo()
-    {
-        return talkingTo;
     }
 
     private void OnDrawGizmosSelected()

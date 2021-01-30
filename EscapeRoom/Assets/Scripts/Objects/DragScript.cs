@@ -6,6 +6,7 @@ public class DragScript : MonoBehaviour
 {
     private Vector2 startPos;
     private ObjectSortingOrder objectSortingOrder;
+    private HighlightScript highlightScript;
 
     private KeyListeners keyListener;
     private SpriteRenderer spriteRenderer;
@@ -20,6 +21,8 @@ public class DragScript : MonoBehaviour
 
     public void GetKeyListener()
     {
+        highlightScript = GetComponent<HighlightScript>();
+
         keyListener = KeyListeners.instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
         objectSortingOrder = GetComponent<ObjectSortingOrder>();
@@ -57,6 +60,22 @@ public class DragScript : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (highlightScript)
+        {
+            highlightScript.Highlight(true);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (highlightScript)
+        {
+            highlightScript.Highlight(false);
         }
     }
 

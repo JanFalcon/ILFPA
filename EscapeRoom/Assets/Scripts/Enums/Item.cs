@@ -63,6 +63,12 @@ public class Item
 
         //Player
         Player,
+
+        //UI
+        BookUI,
+        BlackBoardUI,
+        GreenBoardUI,
     }
     public GameItem gameItem;
+
 }
