@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SaveableEntity : MonoBehaviour, ISaveable
+public class SaveableEntity : MonoBehaviour
 {
     public string id;
-
-    public string GetID => id;
-
     public Item.GameItem gameItem;
 
     [ContextMenu("Generate ID")]
@@ -25,11 +22,7 @@ public class SaveableEntity : MonoBehaviour, ISaveable
     private void Start()
     {
         //Subscribe
-
-        if(gameItem != Item.GameItem.Player)
-        {
-            SaveSystem.instance.LoadEvent += DestroyThis;
-        }
+        SaveSystem.instance.LoadEvent += DestroyThis;
     }
 
     public void DestroyThis()
@@ -42,57 +35,30 @@ public class SaveableEntity : MonoBehaviour, ISaveable
         }
     }
 
-    [Serializable]
-    private struct SaveData
-    {
-        public string id, gameItem;
-        public float xPos, yPos, zPos;
-        public float rotX, rotY, rotZ, rotW;
-    }
-
     public object CaptureState()
     {
-        Vector3 objectPosition = transform.position;
-        Quaternion ObjectRotation = transform.rotation;
+        Dictionary<string, object> state = new Dictionary<string, object>();
 
-        string itemName = this.gameItem.ToString();
-
-        return new SaveData
+        foreach (ISaveable saveAble in GetComponents<ISaveable>())
         {
-            id = this.id,
-            gameItem = itemName,
-            xPos = objectPosition.x,
-            yPos = objectPosition.y,
-            zPos = objectPosition.z,
+            Debug.Log(saveAble.GetType().ToString());
+            state[saveAble.GetType().ToString()] = saveAble.CaptureState();
+        }
 
-            rotX = ObjectRotation.x,
-            rotY = ObjectRotation.y,
-            rotZ = ObjectRotation.z,
-            rotW = ObjectRotation.w
-        };
+        return state;
     }
 
     public void LoadState(object state)
     {
-        SaveData saveData = (SaveData)state;
-
-        transform.position = new Vector3(saveData.xPos, saveData.yPos, saveData.zPos);
-        transform.rotation = new Quaternion(saveData.rotX, saveData.rotY, saveData.rotZ, saveData.rotW);
-    }
-
-    /// <summary>
-    /// It's Process but could be better.
-    /// </summary>
-    public GameObject LoadObjects(object state)
-    {
-        SaveData saveData = (SaveData)state;
-        Item.GameItem gameItem = (Item.GameItem)System.Enum.Parse(typeof(Item.GameItem), saveData.gameItem);
-
-        if(gameItem == Item.GameItem.Player)
+        Dictionary<string, object> stateDictionary =  (Dictionary<string, object>)state;
+        foreach (ISaveable saveAble in GetComponents<ISaveable>())
         {
-            return gameObject;
+            string typeName = saveAble.GetType().ToString();
+            if (stateDictionary.TryGetValue(typeName, out object value))
+            {
+                saveAble.LoadState(value);
+            }
         }
-
-        return ItemCreator.instance.SpawnItem(gameItem, Vector3.zero);
     }
+
 }

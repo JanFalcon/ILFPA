@@ -24,7 +24,7 @@ public class ItemSlotScript : MonoBehaviour
         {
             ItemCreator.instance.SpawnItem(item, KeyListeners.instance.mousePos).GetComponent<DragScript>().Dragging();
         }
-        catch(Exception ee)
+        catch
         {
             Debug.Log("No Item Found");
         }

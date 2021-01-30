@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
+    public static PlayerMovementScript instance;
+
     private Rigidbody2D rb;
     private Vector2 moveDirection = Vector2.zero;
     public float movementSpeed = 5f;
@@ -13,6 +15,10 @@ public class PlayerMovementScript : MonoBehaviour
     private Animator anim;
     private int isWalking;
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -21,6 +27,8 @@ public class PlayerMovementScript : MonoBehaviour
         isWalking = Animator.StringToHash("isWalking");
 
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        CameraFollowScript.instance.SetTarget(transform);
     }
 
     void Update()

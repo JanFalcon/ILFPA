@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private float timer = 0f;
 
+    private bool CreatorMode = true;
+
     private void Awake()
     {
         instance = this;
@@ -22,4 +24,15 @@ public class GameManager : MonoBehaviour
     {
         return timer;
     }
+
+    public bool GetCreatorMode()
+    {
+        return CreatorMode;
+    }
+
+    public void SetCreatorMode(bool CreatorMode)
+    {
+        this.CreatorMode = CreatorMode;
+    }
+
 }

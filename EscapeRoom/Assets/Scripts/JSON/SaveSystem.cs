@@ -37,7 +37,6 @@ public class SaveSystem : MonoBehaviour
     public void Load()
     {
         LoadEvent?.Invoke();
-
         Dictionary<string, object> saveData = LoadFile();
 
         //To be changed
@@ -95,22 +94,19 @@ public class SaveSystem : MonoBehaviour
         foreach (SaveableEntity saveEntity in FindObjectsOfType<SaveableEntity>())
         {
             //state.Add(saveEntity.id, saveEntity.CaptureState());
-            state[saveEntity.id] = saveEntity.CaptureState();
+            state[saveEntity.id + "|" + saveEntity.gameItem.ToString()] = saveEntity.CaptureState();
         }
     }
 
     public void LoadState(Dictionary<string, object> state)
     {
-        SaveableEntity playerEntity = GameObject.FindGameObjectWithTag("Player").GetComponent<SaveableEntity>();
-
+        SaveManager saveManager = SaveManager.instance;
         foreach (KeyValuePair<string, object> item in state)
         {
             if(state.TryGetValue(item.Key, out object loadState)){
-                GameObject itemValue = playerEntity.LoadObjects(loadState);
-                foreach(ISaveable saveable in itemValue.GetComponents<ISaveable>())
-                {
-                    saveable.LoadState(loadState);
-                }
+                string gameItem = item.Key.Split('|')[1];
+                GameObject itemValue = saveManager.LoadObject(gameItem);
+                itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
             }
         }
     }

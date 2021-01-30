@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class ObjectData
+//For Position
+public class ObjectData : MonoBehaviour, ISaveable
 {
-    public string id;
     public Item.GameItem gameItem;
 
-    public Vector3 objectPosition;
-    public Quaternion objectRotation;
+    public object CaptureState()
+    {
+        return SaveManager.instance.CaptureState(gameItem.ToString(), transform.position, transform.rotation);
+    }
+
+    public void LoadState(object state)
+    {
+        SaveManager.instance.LoadState(state, transform);
+    }
 }

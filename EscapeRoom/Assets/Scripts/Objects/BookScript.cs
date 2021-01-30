@@ -2,53 +2,88 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
-public class BookScript : MonoBehaviour, IInteractable
+[RequireComponent(typeof(HighlightScript))]
+public class BookScript : MonoBehaviour, IInteractable, ISaveable
 {
-    public GameObject bookUI;
-    private GameObject item;
-    private string text;
+    public Item.GameItem SpawnItem;
 
-    public float highlight = 0.025f;
+    private string textBody = "";
+    private GameObject bookUI;
+    private Transform canvas;
 
-    private Material material;
-
-    public void Awake()
+    private HighlightScript highLightScript;
+    private void Awake()
     {
-        material = GetComponent<SpriteRenderer>().material;
+        GetHighLightScript();
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
-    private void Start()
+    private void GetHighLightScript()
     {
-        item = ItemCreator.instance.SpawnItem(bookUI, GameObject.FindGameObjectWithTag("Canvas").transform);
-        item.SetActive(false);
+        highLightScript = GetComponent<HighlightScript>();
     }
 
     public void Highlight(bool highlight)
     {
-        material.SetFloat("_Thickness", highlight ? this.highlight : 0f);
+        if (highLightScript)
+        {
+            highLightScript.Highlight(highlight);
+        }
+        else
+        {
+            GetHighLightScript();
+            Highlight(highlight);
+        }
+    }
+
+    public string GetTextBody()
+    {
+        return textBody;
+    }
+
+    public void SetTextBody(string textBody)
+    {
+        this.textBody = textBody;
     }
 
     public void Interact()
     {
-        if (item)
-        {
-            item.SetActive(true);
-        }
+        //Instantiate UI
+        bookUI = ItemCreator.instance.SpawnItem(SpawnItem, canvas);
+        BookUIScript bookUIScript = bookUI.GetComponent<BookUIScript>();
+        bookUIScript.SetBookScript(this);
+        bookUIScript.SetText(textBody);
     }
 
     public void Close()
     {
-        //bookUI.SetActive(false);
+        if (bookUI)
+        {
+            Destroy(bookUI);
+        }
+
+        PlayerMovementScript.instance.enabled = true;
     }
 
-    public void SetText(string text)
+    public object CaptureState()
     {
-        this.text = text;
+        return new SaveData
+        {
+            textBody = this.textBody
+        };
     }
 
-    public string GetText()
+    public void LoadState(object state)
     {
-        return text;
+        SaveData saveData = (SaveData)state;
+        textBody = saveData.textBody;
+    }
+
+    [Serializable]
+    private struct SaveData
+    {
+        public string textBody;
     }
 }

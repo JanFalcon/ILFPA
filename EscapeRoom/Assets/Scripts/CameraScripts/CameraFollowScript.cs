@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraFollowScript : MonoBehaviour
 {
+    public static CameraFollowScript instance;
+
     private Transform camTransform;
     [SerializeField] private Transform target;
 
@@ -13,11 +15,19 @@ public class CameraFollowScript : MonoBehaviour
     private Vector2 velocity = Vector2.zero;
     private bool chaseTarget = false;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
+    }
+
     void Start()
     {
         camTransform = transform.GetChild(0);
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-
         fixedRadius = (1f / 15f) * deadZoneRadius;
     }
 
@@ -40,6 +50,11 @@ public class CameraFollowScript : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!target)
+        {
+            return;
+        }
+
         if (chaseTarget)
         {
             transform.position = Vector2.SmoothDamp((Vector2)transform.position, (Vector2)target.position, ref velocity, smoothSpeed);

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7633287215946192374}
   - component: {fileID: 1710942251}
   - component: {fileID: -8472068687696567432}
+  - component: {fileID: 8921759605357008308}
+  - component: {fileID: 1282305786}
   m_Layer: 9
   m_Name: Book1
   m_TagString: Untagged
@@ -115,8 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef97aba7765b1d4a9adb02e562813f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bookUI: {fileID: 3606043497934349237, guid: 54ecdfc3283533c448cc2993dba1aa7e, type: 3}
-  highlight: 0.05
+  SpawnItem: 36
 --- !u!114 &7633287215946192374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,4 +160,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
+  gameItem: 1
+--- !u!114 &8921759605357008308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019471107189423502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c48fd50ce634a45ac2a6a0eab4458b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlight: 0.05
+--- !u!114 &1282305786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019471107189423502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   gameItem: 1
