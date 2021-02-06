@@ -8,6 +8,8 @@ public class SaveableEntity : MonoBehaviour
     public string id;
     public Item.GameItem gameItem;
 
+    public bool createItem = true;
+
     [ContextMenu("Generate ID")]
     private void GenerateID()
     {
@@ -22,7 +24,10 @@ public class SaveableEntity : MonoBehaviour
     private void Start()
     {
         //Subscribe
-        SaveSystem.instance.LoadEvent += DestroyThis;
+        if (createItem)
+        {
+            SaveSystem.instance.LoadEvent += DestroyThis;
+        }
     }
 
     public void DestroyThis()
