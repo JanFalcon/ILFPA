@@ -66,6 +66,7 @@ public class PlayerInteract : MonoBehaviour
                         playerMovement.enabled = false;
                         interact.Interact();
                         interacting = true;
+                        _interactUI.SetActive(false);
                     }
                 }
             }

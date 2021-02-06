@@ -11,6 +11,14 @@ public class PlayerInventoryScript : MonoBehaviour
         inventory = GameObject.FindGameObjectWithTag("Inventory");
     }
 
+    private void Start()
+    {
+        if (!GameManager.instance.GetCreatorMode())
+        {
+            enabled = false;
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

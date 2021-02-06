@@ -68,7 +68,19 @@ public class Item
         BookUI,
         BlackBoardUI,
         GreenBoardUI,
+
+        Computer,
     }
     public GameItem gameItem;
 
+
+    public enum Difficulty
+    {
+        Easy,
+        EasyMedium,
+        Medium,
+        MediumHard,
+        Hard,
+    }
+    public Difficulty difficulty;
 }

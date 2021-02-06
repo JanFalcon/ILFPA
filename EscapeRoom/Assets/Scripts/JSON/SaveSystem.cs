@@ -103,10 +103,20 @@ public class SaveSystem : MonoBehaviour
         SaveManager saveManager = SaveManager.instance;
         foreach (KeyValuePair<string, object> item in state)
         {
-            if(state.TryGetValue(item.Key, out object loadState)){
+            if (state.TryGetValue(item.Key, out object loadState))
+            {
                 string gameItem = item.Key.Split('|')[1];
-                GameObject itemValue = saveManager.LoadObject(gameItem);
-                itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
+                if (gameItem == "Computer")
+                {
+                    GameObject.FindGameObjectWithTag("Computer").GetComponent<SaveableEntity>().LoadState(loadState);
+                }
+                else
+                {
+                    GameObject itemValue = saveManager.LoadObject(gameItem);
+                    itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
+                }
+
+
             }
         }
     }
