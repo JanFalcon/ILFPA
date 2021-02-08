@@ -30,18 +30,36 @@ public class ComputerUIScript : MonoBehaviour
 
     private void Start()
     {
-        BackToAdmin();
+        if (!GameManager.instance.GetCreatorMode())
+        {
+            CloseAll();
+            TestPanel();
+        }
+        else
+        {
+            BackToAdmin();
+        }
     }
 
     public void Open()
     {
         gameObject.SetActive(true);
+        if (!GameManager.instance.GetCreatorMode())
+        {
+            CloseAll();
+            TestPanel();
+        }
 
         if (!once)
         {
             once = true;
-            GameManager.instance.ResetTime();
+            computerScript.ResetTimer();
         }
+    }
+
+    public void SetOnce()
+    {
+        once = false;
     }
 
     public void GetQuestionContents()
@@ -67,8 +85,8 @@ public class ComputerUIScript : MonoBehaviour
         float hardValue = sliderScript.hardSlider.value / 100f;
         float min = Mathf.Min(Mathf.Min(CheckValue(easyValue), CheckValue(mediumValue)), CheckValue(hardValue));
 
-        Debug.Log(sliderScript.CheckDifficulty().ToString());
-        Debug.Log($"MIN : {min}");
+        //Debug.Log(sliderScript.CheckDifficulty().ToString());
+        //Debug.Log($"MIN : {min}");
         float value = FuzzyLogic.instance.CalculateTime(min, sliderScript.CheckDifficulty());
 
         if(computerScript.Save(value, questionInputField.text, answerInputField.text))
@@ -104,8 +122,10 @@ public class ComputerUIScript : MonoBehaviour
         if (computerScript.Delete(number))
         {
             //ADD UI (CORRECT)
+            string difficulty = FuzzyLogic.instance.GetDifficulty();
+
             //Set New Values
-            computerScript.SetValues(GameManager.instance.GetTimer(), (float)tries);
+            computerScript.SetValues(computerScript.timer, (float)tries);
             //Get Next QuestionNumber
             int nextQuestionNumber = computerScript.GetQuestionNumber();
 
@@ -119,17 +139,16 @@ public class ComputerUIScript : MonoBehaviour
 
             testPanel.SetActive(false);
             evaluationPanel.SetActive(true);
-            evaluationScript.SetEvaluation($"Difficulty : {FuzzyLogic.instance.GetDifficulty()}\n{value}\nMax Value : {FuzzyLogic.instance.GetMax()}\nFuzzy Value : {FuzzyLogic.instance.GetFuzzyValue()}");
+            evaluationScript.SetEvaluation($"Difficulty : {difficulty}\n{value}\nMax Value : {FuzzyLogic.instance.GetMax()}\nFuzzy Value : {FuzzyLogic.instance.GetFuzzyValue()}");
 
+            //NEXT
             //testScript.SetQuestionAndAnswer(computerScript.GetQuestion(nextQuestionNumber), nextQuestionNumber);
         }
     }
 
     public void TestPanel()
     {
-        //Activate
-        BackToAdmin();
-        adminContents.SetActive(false);
+        CloseAll();
         testPanel.SetActive(true);
 
         if (computerScript.TestQuestions())
@@ -137,12 +156,20 @@ public class ComputerUIScript : MonoBehaviour
             int nextQuestionNumber = computerScript.GetQuestionNumber();
             testScript.SetQuestionAndAnswer(computerScript.GetQuestion(nextQuestionNumber), nextQuestionNumber);
         }
-
     }
 
     public bool Delete(int number)
     {
         return computerScript.Delete(number);
+    }
+
+    public void CloseAll()
+    {
+        adminContents.SetActive(false);
+        questionContents.SetActive(false);
+        questionViewer.SetActive(false);
+        testPanel.SetActive(false);
+        evaluationPanel.SetActive(false);
     }
 
     public void BackToAdmin()

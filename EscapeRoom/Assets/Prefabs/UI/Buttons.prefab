@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 474.99994, y: 16.74}
-  m_SizeDelta: {x: 75, y: 36}
+  m_SizeDelta: {x: 93.11948, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2286709267990379652
 CanvasRenderer:
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -97,10 +97,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
-    m_HighlightedColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
-    m_PressedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.14150941, g: 0.12749197, b: 0.12749197, a: 1}
+    m_HighlightedColor: {r: 0.18867922, g: 0.1450694, b: 0.1450694, a: 1}
+    m_PressedColor: {r: 0.18823531, g: 0.14509805, b: 0.14509805, a: 1}
+    m_SelectedColor: {r: 0.18823531, g: 0.14509805, b: 0.14509805, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -474,7 +474,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 474.99994, y: -49.51}
-  m_SizeDelta: {x: 75, y: 36}
+  m_SizeDelta: {x: 90.531006, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2286709269011237363
 CanvasRenderer:
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -534,10 +534,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.2627451, g: 0.2627451, b: 0.2627451, a: 1}
-    m_HighlightedColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
-    m_PressedColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.14117648, g: 0.12941177, b: 0.12941177, a: 1}
+    m_HighlightedColor: {r: 0.084905684, g: 0.07329123, b: 0.07329123, a: 1}
+    m_PressedColor: {r: 0.08627451, g: 0.07450981, b: 0.07450981, a: 1}
+    m_SelectedColor: {r: 0.08627451, g: 0.07450981, b: 0.07450981, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -559,7 +559,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BookUIScript, Assembly-CSharp
-        m_MethodName: SaveText
+        m_MethodName: ClearText
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

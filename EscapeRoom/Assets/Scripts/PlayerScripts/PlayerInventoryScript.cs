@@ -8,6 +8,11 @@ public class PlayerInventoryScript : MonoBehaviour
 
     private void Awake()
     {
+        FindInventory();
+    }
+
+    public void FindInventory()
+    {
         inventory = GameObject.FindGameObjectWithTag("Inventory");
     }
 
@@ -23,7 +28,14 @@ public class PlayerInventoryScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            inventory.SetActive(!inventory.activeSelf);
+            if (!inventory)
+            {
+                FindInventory();
+            }
+            if (inventory)
+            {
+                inventory.SetActive(!inventory.activeSelf);
+            }
         }
     }
 }

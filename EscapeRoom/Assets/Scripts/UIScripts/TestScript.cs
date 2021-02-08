@@ -29,17 +29,32 @@ public class TestScript : MonoBehaviour
     public void Check()
     {
         tries++;
-        if(string.Equals(answerField.text, answer))
+        if (answerField.text.Contains(answer))
         {
             //computerUI.Delete(number);
             computerUI.CheckAnswer(number, tries);
             Debug.Log("Correct");
         }
+
+        //if(string.Equals(answerField.text, answer))
+        //{
+        //    //computerUI.Delete(number);
+        //    computerUI.CheckAnswer(number, tries);
+        //    Debug.Log("Correct");
+        //}
         //Add wrong UI
     }
 
     public void Back()
     {
-        computerUI.BackToAdmin();
+        if (GameManager.instance.GetCreatorMode())
+        {
+            computerUI.BackToAdmin();
+        }
+        else
+        {
+            computerUI.Close();
+        }
+
     }
 }

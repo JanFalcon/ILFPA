@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8036546827428619544}
   - component: {fileID: 307187753776941408}
   - component: {fileID: -1953505450450009860}
+  - component: {fileID: -855496015927328177}
   m_Layer: 0
   m_Name: Mirror_Table
   m_TagString: Untagged
@@ -182,3 +183,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   gameItem: 20
+  createItem: 1
+--- !u!114 &-855496015927328177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951210370565987070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
