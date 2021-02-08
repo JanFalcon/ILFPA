@@ -5,17 +5,20 @@ using System;
 
 public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 {
-    private float defuzzification;
-
     private List<string> questionnaires;
 
     public GameObject computerPanel;
     public ComputerUIScript computerUIScript;
 
+    private FinishRoomScript finishRoom;
+
     public float time = 1000f;
     public float tries = 1000f;
 
     private int questionNumber = 0;
+    private int questionCounter = 0;
+
+    public float timer = 0;
 
     private HighlightScript highLightScript;
     private void Awake()
@@ -25,8 +28,20 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     private void Start()
     {
+        finishRoom = transform.GetChild(0).GetComponent<FinishRoomScript>();
+
         computerPanel.SetActive(false);
         GetHighLightScript();
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
+
+    public void ResetTimer()
+    {
+        timer = 0;
     }
 
     private void GetHighLightScript()
@@ -57,6 +72,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         if (questionnaires.Count > 0)
         {
+            questionCounter++;
             return questionnaires[number];
         }
         else
@@ -124,7 +140,20 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool TestQuestions()
     {
+        if(questionCounter > 5 || questionnaires.Count == 0)
+        {
+            Finished();
+        }
+
         return questionnaires.Count > 0 ? true : false;
+    }
+
+    public void Finished()
+    {
+        finishRoom.OpenDoor();
+        computerUIScript.Close();
+
+        finishRoom.SetFinish(true);
     }
 
     public string[] GetQuestions()
@@ -157,7 +186,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Interact()
     {
-        //computerPanel.SetActive(true);
+        computerUIScript.gameObject.SetActive(true);
         computerUIScript.Open();
     }
 
@@ -180,8 +209,14 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         Debug.Log("Computer Loading");
 
+        finishRoom.SetFinish(false);
+
         SaveData saveData = (SaveData)state;
         questionnaires = new List<string>(saveData.questionnaires);
+        questionCounter = 0;
+        time = 1000f;
+        tries = 1000f;
+        computerUIScript.SetOnce();
     }
 
     [Serializable]

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2186707221501855745}
   - component: {fileID: 1531184584584584167}
   - component: {fileID: 5460509214640328827}
+  - component: {fileID: -4880987232890972236}
   m_Layer: 0
   m_Name: Window3
   m_TagString: Untagged
@@ -182,3 +183,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   gameItem: 30
+  createItem: 1
+--- !u!114 &-4880987232890972236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8201902663710537107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

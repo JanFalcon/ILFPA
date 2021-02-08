@@ -19,8 +19,16 @@ public class SaveSystem : MonoBehaviour
 
     public event Action LoadEvent;
 
-    //To be changed
-    private string SavePath() => Application.persistentDataPath + "/SaveData/Save.txt";
+    //SaveData should be subject name
+
+    private string path;
+    private string subjectPath;
+    public void SetPath(string path, string subjectPath)
+    {
+        this.path = path;
+        this.subjectPath = subjectPath;
+    }
+
 
     [ContextMenu("Save")]
     public void Save()
@@ -38,10 +46,7 @@ public class SaveSystem : MonoBehaviour
     {
         LoadEvent?.Invoke();
         Dictionary<string, object> saveData = LoadFile();
-
-        //To be changed
         LoadState(saveData);
-
         Debug.Log("Load Successful");
     }
 
@@ -49,25 +54,25 @@ public class SaveSystem : MonoBehaviour
     {
         BinaryFormatter formatter = GetBinaryFormatter();
 
-        if (!Directory.Exists(Application.persistentDataPath + "/SaveData"))
+        if (!Directory.Exists(subjectPath))
         {
-            Directory.CreateDirectory(Application.persistentDataPath + "/SaveData");
+            Directory.CreateDirectory(subjectPath);
         }
 
-        FileStream file = File.Create(SavePath());
+        FileStream file = File.Create(path);
         formatter.Serialize(file, state);
         file.Close();
     }
 
     public Dictionary<string, object> LoadFile()
     {
-        if (!File.Exists(SavePath()))
+        if (!File.Exists(path))
         {
             return new Dictionary<string, object>();
         }
 
         BinaryFormatter formatter = GetBinaryFormatter();
-        FileStream file = File.Open(SavePath(), FileMode.Open);
+        FileStream file = File.Open(path, FileMode.Open);
 
         try
         {
@@ -77,7 +82,7 @@ public class SaveSystem : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Failed to load file at " + SavePath());
+            Debug.Log("Failed to load file at " + path);
             file.Close();
             return new Dictionary<string, object>();
         }
@@ -115,8 +120,6 @@ public class SaveSystem : MonoBehaviour
                     GameObject itemValue = saveManager.LoadObject(gameItem);
                     itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
                 }
-
-
             }
         }
     }

@@ -26,6 +26,11 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
         fontSize = text.fontSize;
     }
 
+    public void SetTextBody(string textBody)
+    {
+        this.textBody = textBody;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (highLight)

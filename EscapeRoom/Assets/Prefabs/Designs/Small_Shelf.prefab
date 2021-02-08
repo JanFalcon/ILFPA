@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4389273593022342293}
   - component: {fileID: 6282805249305495927}
   - component: {fileID: -6057905943728941276}
+  - component: {fileID: -8665046453860803597}
   m_Layer: 0
   m_Name: Small_Shelf
   m_TagString: Untagged
@@ -182,3 +183,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   gameItem: 26
+  createItem: 1
+--- !u!114 &-8665046453860803597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6430102423231434379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

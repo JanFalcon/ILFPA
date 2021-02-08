@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//For Position
+[RequireComponent(typeof(SaveableEntity))]
 public class ObjectData : MonoBehaviour, ISaveable
 {
-    public Item.GameItem gameItem;
-
     public object CaptureState()
     {
-        return SaveManager.instance.CaptureState(gameItem.ToString(), transform.position, transform.rotation);
+        string gameItem = GetComponent<SaveableEntity>().gameItem.ToString();
+        return SaveManager.instance.CaptureState(gameItem, transform.position, transform.rotation);
     }
 
     public void LoadState(object state)

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1815259214076785189}
   - component: {fileID: 4815671997369853544}
   - component: {fileID: 8602237171587833922}
+  - component: {fileID: 9037856370735527400}
   m_Layer: 0
   m_Name: Red_Rag
   m_TagString: Untagged
@@ -155,3 +156,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   gameItem: 10
+  createItem: 1
+--- !u!114 &9037856370735527400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315670879527175150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

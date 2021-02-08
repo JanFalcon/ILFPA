@@ -12,6 +12,7 @@ public class PlayerInteract : MonoBehaviour
     private readonly int bitMask = 1 << 9;  //Interactable Layer
     public bool InArea { get; set; } = false;
 
+    private Transform canvas;
     private PlayerMovementScript playerMovement;
 
     private IInteractable interact;
@@ -19,18 +20,20 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        _interactUI = GameObject.FindGameObjectWithTag("InteractUI");
-        if (!_interactUI)
-        {
-            InstantiateUI();
-        }
-        _interactUI.SetActive(false);
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
     public void InstantiateUI()
     {
-        Transform canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
         _interactUI = Instantiate(interactUI, canvas);
+    }
+
+    public void DestroyInteract()
+    {
+        if (_interactUI)
+        {
+            Destroy(_interactUI);
+        }
     }
 
     private void Start()
@@ -52,7 +55,7 @@ public class PlayerInteract : MonoBehaviour
             //Highlight gameobject
             if (!InArea && interact != null)
             {
-                _interactUI.SetActive(true);
+                InstantiateUI();
                 interact.Highlight(true);
             }
             InArea = true;                                                          
@@ -66,7 +69,7 @@ public class PlayerInteract : MonoBehaviour
                         playerMovement.enabled = false;
                         interact.Interact();
                         interacting = true;
-                        _interactUI.SetActive(false);
+                        DestroyInteract();
                     }
                 }
             }
@@ -84,7 +87,7 @@ public class PlayerInteract : MonoBehaviour
     {
         InArea = false;
         interacting = false;
-        _interactUI.SetActive(false);
+        DestroyInteract();
 
         if (interact != null)
         {

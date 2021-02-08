@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7484962132651912052}
   - component: {fileID: 376954687338631898}
   - component: {fileID: -173424995674996487}
+  - component: {fileID: -5879392219179612240}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   gameItem: 18
+  createItem: 1
+--- !u!114 &-5879392219179612240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3308556083547274524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

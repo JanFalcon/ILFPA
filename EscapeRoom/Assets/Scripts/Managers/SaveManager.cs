@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
+
+    public TMP_InputField subjectName;
+    public TMP_InputField saveName;
 
     private void Awake()
     {
@@ -47,5 +53,49 @@ public class SaveManager : MonoBehaviour
         public string gameItem;
         public float xPos, yPos, zPos;
         public float rotX, rotY, rotZ, rotW;
+    }
+
+    public string GetSubjectPath()
+    {
+        //return $"{Application.persistentDataPath}/SaveData/{subjectName.text.ToLower()}/";
+        return $"{GameManager.instance.GetDesktopPath()}{subjectName.text.ToLower()}/";
+    }
+
+    public string GetFullPath()
+    {
+        return $"{GetSubjectPath()}{saveName.text.ToLower()}.sv";
+    }
+
+    public void Save()
+    {
+        if (string.IsNullOrEmpty(subjectName.text) || string.IsNullOrEmpty(saveName.text))
+        {
+            Debug.Log("NO VALUES");
+            return;
+        }
+        SaveSystem.instance.SetPath(GetFullPath(), GetSubjectPath());
+        SaveSystem.instance.Save();
+
+        SceneManager.LoadScene(0);
+    }
+
+    [ContextMenu("SUBJECTS")]
+    public string[] GetSubjectFiles()
+    {
+        string path = $"{GameManager.instance.GetDesktopPath()}";
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        return Directory.GetDirectories(path);
+    }
+
+    public string[] GetSaveFiles(string subject)
+    {
+        string path = $"{GameManager.instance.GetDesktopPath()}{subject.ToLower()}/";
+        if (!Directory.Exists(path)){
+            Directory.CreateDirectory(path);
+        }
+        return Directory.GetFiles(path);
     }
 }

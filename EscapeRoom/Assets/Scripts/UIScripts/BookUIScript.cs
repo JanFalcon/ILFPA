@@ -7,22 +7,18 @@ public class BookUIScript : MonoBehaviour
 {
     private BookScript bookScript;
     //private 
-    public TextMeshProUGUI textValue;
     public TMP_InputField inputField;
 
     public GameObject buttons;
 
-    private void Start()
+    public void SetBookScript(BookScript bookScript)
     {
         if (!GameManager.instance.GetCreatorMode())
         {
             buttons.SetActive(false);
             inputField.interactable = false;
         }
-    }
 
-    public void SetBookScript(BookScript bookScript)
-    {
         this.bookScript = bookScript;
     }
 
@@ -30,9 +26,8 @@ public class BookUIScript : MonoBehaviour
     {
         if (bookScript) 
         {
-            bookScript.SetTextBody(textValue.text);
-            Debug.Log("SAVED");
-            //ADD DESIGN
+            bookScript.SetTextBody(inputField.text);
+            Close();
         }
         else
         {
@@ -42,13 +37,11 @@ public class BookUIScript : MonoBehaviour
 
     public void SetText(string text)
     {
-        textValue.text = text;
         inputField.text = text;
     }
 
     public void ClearText()
     {
-        textValue.text = "";
         inputField.text = "";
     }
 

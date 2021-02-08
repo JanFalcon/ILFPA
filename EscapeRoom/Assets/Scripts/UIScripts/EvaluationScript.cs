@@ -7,6 +7,7 @@ using TMPro;
 public class EvaluationScript : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    public ComputerScript computerScript;
 
     public void SetEvaluation(string eval)
     {
@@ -15,6 +16,6 @@ public class EvaluationScript : MonoBehaviour
 
     public void NextQuestion()
     {
-        GameManager.instance.ResetTime();
+        computerScript.ResetTimer();
     }
 }

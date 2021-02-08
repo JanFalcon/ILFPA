@@ -119,8 +119,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 68cbc948ee83af441b249950f96ab098, type: 2}
+  m_sharedMaterial: {fileID: -3370744821204225284, guid: 68cbc948ee83af441b249950f96ab098, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -254,15 +254,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 68cbc948ee83af441b249950f96ab098, type: 2}
+  m_sharedMaterial: {fileID: -3370744821204225284, guid: 68cbc948ee83af441b249950f96ab098, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 2150773298
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.5}
+    rgba: 3372220415
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -279,8 +279,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 1998216680613392596}
   - component: {fileID: 1998216680613392597}
   m_Layer: 5
-  m_Name: OpenText
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -682,7 +682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bad73035ded0d4bb773ee507ccb861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textValue: {fileID: 1998216679631147750}
   inputField: {fileID: 1998216679858030148}
   buttons: {fileID: 5136670045330767056}
 --- !u!1001 &6410060181865268681
@@ -696,10 +695,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1661771132}
-    - target: {fileID: 2286709267990379654, guid: fac944e5824856045ab83069e464ad18, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveText
-      objectReference: {fileID: 0}
     - target: {fileID: 2286709268753217816, guid: fac944e5824856045ab83069e464ad18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -792,10 +787,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1661771132}
-    - target: {fileID: 2286709269011237365, guid: fac944e5824856045ab83069e464ad18, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ClearText
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fac944e5824856045ab83069e464ad18, type: 3}
 --- !u!1 &5136670045330767056 stripped
