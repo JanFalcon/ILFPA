@@ -36,7 +36,7 @@ public class PlayerMovementScript : MonoBehaviour
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveDirection = direction.normalized * movementSpeed;
 
-        Flip(direction.x);
+        //Flip(direction.x);
 
         anim.SetBool(isWalking, direction != Vector2.zero ? true : false);
     }

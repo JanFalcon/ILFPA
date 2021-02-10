@@ -76,10 +76,10 @@ public class SaveManager : MonoBehaviour
         SaveSystem.instance.SetPath(GetFullPath(), GetSubjectPath());
         SaveSystem.instance.Save();
 
-        SceneManager.LoadScene(0);
+        PlayerPrefs.SetInt("Admin", 1);
+        GameManager.instance.EndGame();
     }
 
-    [ContextMenu("SUBJECTS")]
     public string[] GetSubjectFiles()
     {
         string path = $"{GameManager.instance.GetDesktopPath()}";

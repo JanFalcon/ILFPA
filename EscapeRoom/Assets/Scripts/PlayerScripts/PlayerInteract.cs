@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    public static PlayerInteract instance;
+
     public GameObject interactUI;
     private GameObject _interactUI;
 
@@ -20,12 +22,14 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
     public void InstantiateUI()
     {
         _interactUI = Instantiate(interactUI, canvas);
+        _interactUI.transform.SetAsFirstSibling();
     }
 
     public void DestroyInteract()

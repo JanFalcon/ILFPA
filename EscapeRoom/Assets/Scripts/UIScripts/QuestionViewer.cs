@@ -28,12 +28,11 @@ public class QuestionViewer : MonoBehaviour
         }
     }
 
-    //public void Delete()
-    //{
-    //    if (computerUI.Delete(text.text))
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
-
+    public void Delete()
+    {
+        if (computerUI.Delete(text.text))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

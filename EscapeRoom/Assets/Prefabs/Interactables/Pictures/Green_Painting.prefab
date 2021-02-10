@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -8066928357891311811}
   - component: {fileID: 601078624284609311}
   - component: {fileID: 3804185892761791648}
+  - component: {fileID: 832328739082947006}
   m_Layer: 9
   m_Name: Green_Painting
   m_TagString: Untagged
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1444221157224529047, guid: 3ddc8130d9342af42bc63df9d2b809c5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c3be0ea7fa8bf442a5ba81b36e12191, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,7 +107,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3125, y: 0.8125}
+    oldSize: {x: 1.4375, y: 0.9375}
     newSize: {x: 1.3125, y: 0.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -132,7 +133,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3125, y: 0.8125}
+    oldSize: {x: 1.4375, y: 0.9375}
     newSize: {x: 1.3125, y: 0.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -209,3 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &832328739082947006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4389093822061732293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c48fd50ce634a45ac2a6a0eab4458b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlight: 0.05

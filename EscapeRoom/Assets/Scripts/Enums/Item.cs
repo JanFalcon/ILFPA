@@ -70,6 +70,7 @@ public class Item
         GreenBoardUI,
 
         Computer,
+        Laptop,
     }
     public GameItem gameItem;
 

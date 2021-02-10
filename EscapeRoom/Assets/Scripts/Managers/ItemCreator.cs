@@ -33,6 +33,8 @@ public class ItemCreator : MonoBehaviour
 
     public GameObject wall, leftWall, rightWall, newGround;
 
+    public GameObject laptop;
+
     private void Awake()
     {
         instance = this;
@@ -84,6 +86,8 @@ public class ItemCreator : MonoBehaviour
             case Item.GameItem.BookUI:          return bookUI;
             case Item.GameItem.BlackBoardUI:    return blackBoardUI;
             case Item.GameItem.GreenBoardUI:    return greenBoardUI;
+
+            case Item.GameItem.Laptop:          return laptop;
             default:
                 Debug.Log("No such thing..");   return null;
         }

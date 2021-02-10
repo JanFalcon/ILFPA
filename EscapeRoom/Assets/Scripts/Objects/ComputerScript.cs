@@ -11,6 +11,10 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     public ComputerUIScript computerUIScript;
 
     private FinishRoomScript finishRoom;
+    public Sprite normal, green, red;
+    public GameObject light2D;
+    private SpriteRenderer spriteRenderer;
+    private Coroutine status;
 
     public float time = 1000f;
     public float tries = 1000f;
@@ -18,11 +22,12 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     private int questionNumber = 0;
     private int questionCounter = 0;
 
-    public float timer = 0;
+    public float timer = 0f;
 
     private HighlightScript highLightScript;
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         questionnaires = new List<string>();
     }
 
@@ -52,8 +57,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     public bool Save(float value, string question, string answer)
     {
         questionnaires.Add($"{value.ToString()}|{question}|{answer}");
-        Debug.Log("Added Successfully");
-
         return true;
     }
 
@@ -125,8 +128,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         string correctAnswer = questionnaires[questionNumber].Split('|')[2];
         if (string.Equals(correctAnswer, answer))
         {
-            Debug.Log("CORRECT");
-
             if (removeMe)
             {
                 questionnaires.RemoveAt(questionNumber);
@@ -140,12 +141,12 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool TestQuestions()
     {
-        if(questionCounter > 5 || questionnaires.Count == 0)
+        if(questionCounter > 20 || questionnaires.Count == 0)
         {
             Finished();
         }
 
-        return questionnaires.Count > 0 ? true : false;
+        return questionnaires.Count > 0;
     }
 
     public void Finished()
@@ -154,6 +155,8 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         computerUIScript.Close();
 
         finishRoom.SetFinish(true);
+        CheckStatus();
+        CheckLaptopsStatus();
     }
 
     public string[] GetQuestions()
@@ -167,8 +170,27 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         return true;
     }
 
-    //Interfaces....
+    public bool Delete(string text)
+    {
+        questionnaires.Remove(text);
+        return true;
+    }
 
+    public bool CheckLaptopsStatus()
+    {
+        bool value = true;
+        foreach(LaptopScript laptopScript in FindObjectsOfType<LaptopScript>())
+        {
+            laptopScript.CheckStatus();
+            if (!laptopScript.GetFinish())
+            {
+                value = false;
+            }
+        }
+        return value;
+    }
+
+    //Interfaces....
     //IInteractable
 
     public void Highlight(bool highlight)
@@ -186,8 +208,34 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Interact()
     {
-        computerUIScript.gameObject.SetActive(true);
-        computerUIScript.Open();
+        if (CheckLaptopsStatus() || GameManager.instance.GetCreatorMode())
+        {
+            computerUIScript.gameObject.SetActive(true);
+            computerUIScript.Open();
+        }
+        else
+        {
+            CheckStatus();
+            Close();
+        }
+    }
+
+    public void CheckStatus()
+    {
+        if(status != null)
+        {
+            StopCoroutine(status);
+        }
+        status = StartCoroutine(ShowStatus());
+    }
+
+    private IEnumerator ShowStatus()
+    {
+        light2D.SetActive(true);
+        spriteRenderer.sprite = finishRoom.finish ? green : red;
+        yield return new WaitForSeconds(5f);
+        spriteRenderer.sprite = normal;
+        light2D.SetActive(false);
     }
 
     public void Close()
@@ -207,8 +255,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public void LoadState(object state)
     {
-        Debug.Log("Computer Loading");
-
         finishRoom.SetFinish(false);
 
         SaveData saveData = (SaveData)state;
@@ -223,12 +269,5 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     public struct SaveData
     {
         public string[] questionnaires;
-    }
-
-    [ContextMenu("Test")]
-    public void Test()
-    {
-        //Debug.Log(GetQuestion(FuzzyLogic.instance.FuzzyRules(time, tries)));
-        //CheckAnswer(questionNumber, "aaa", false);
     }
 }

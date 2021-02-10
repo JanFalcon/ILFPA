@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 3606043499023993741}
-  buttons: {fileID: 0}
+  buttons: {fileID: 526693278}
 --- !u!1 &3606043498167729410
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,6 +920,11 @@ PrefabInstance:
       objectReference: {fileID: 1897846204}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fac944e5824856045ab83069e464ad18, type: 3}
+--- !u!1 &526693278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2286709268753217817, guid: fac944e5824856045ab83069e464ad18, type: 3}
+  m_PrefabInstance: {fileID: 2286709269141408391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &526693279 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2286709268753217816, guid: fac944e5824856045ab83069e464ad18, type: 3}
