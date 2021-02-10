@@ -14,12 +14,13 @@ public class HighlightScript : MonoBehaviour
         material = GetComponent<SpriteRenderer>().material;
     }
 
+    private void Start()
+    {
+        material?.SetFloat("_Thickness", 0f);
+    }
 
     public void Highlight(bool highlight)
     {
-        if (material)
-        {
-            material.SetFloat("_Thickness", highlight ? this.highlight : 0f);
-        }
+        material?.SetFloat("_Thickness", highlight ? this.highlight : 0f);
     }
 }

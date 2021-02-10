@@ -44,6 +44,8 @@ public class ComputerUIScript : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
+        GameManager.instance.Interact();
+
         if (!GameManager.instance.GetCreatorMode())
         {
             CloseAll();
@@ -94,6 +96,7 @@ public class ComputerUIScript : MonoBehaviour
             questionInputField.text = "";
             answerInputField.text = "";
         }
+        sliderScript.Reset();
         BackToAdmin();
     }
 
@@ -140,9 +143,6 @@ public class ComputerUIScript : MonoBehaviour
             testPanel.SetActive(false);
             evaluationPanel.SetActive(true);
             evaluationScript.SetEvaluation($"Difficulty : {difficulty}\n{value}\nMax Value : {FuzzyLogic.instance.GetMax()}\nFuzzy Value : {FuzzyLogic.instance.GetFuzzyValue()}");
-
-            //NEXT
-            //testScript.SetQuestionAndAnswer(computerScript.GetQuestion(nextQuestionNumber), nextQuestionNumber);
         }
     }
 
@@ -161,6 +161,11 @@ public class ComputerUIScript : MonoBehaviour
     public bool Delete(int number)
     {
         return computerScript.Delete(number);
+    }
+
+    public bool Delete(string text)
+    {
+        return computerScript.Delete(text);
     }
 
     public void CloseAll()
@@ -184,6 +189,7 @@ public class ComputerUIScript : MonoBehaviour
     public void Close()
     {
         BackToAdmin();
+        GameManager.instance.UnInteract();
         gameObject.SetActive(false);
         computerScript.Close();
     }

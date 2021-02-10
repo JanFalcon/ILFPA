@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSortingOrder : MonoBehaviour
 {
-    private Renderer spriteRenderer;
+    private Renderer spriteRenderer, itemSpriteRenderer;
     public int defaultSortingLayer = 0;
     public float radius = 0.1f;
     public Vector3 offset = Vector3.zero;
@@ -17,9 +17,8 @@ public class PlayerSortingOrder : MonoBehaviour
     void Start()
     {
         spriteRenderer = transform.GetChild(0).GetComponent<Renderer>();
-
+        itemSpriteRenderer = transform.GetChild(1).GetComponent<Renderer>();
         //transform.position = PixelPerfect.instance.Position(transform.position);
-
         //YPOSITION = Mathf.RoundToInt(transform.position.y + offset.y) * -100 + defaultSortingLayer;
         YPOSITION = (int)((transform.position.y + offset.y) * -100) + defaultSortingLayer;
         spriteRenderer.sortingOrder = (int)YPOSITION;
@@ -39,6 +38,7 @@ public class PlayerSortingOrder : MonoBehaviour
         YPOSITION = (int)((transform.position.y + offset.y) * -100) + defaultSortingLayer;
         //YPOSITION = Mathf.RoundToInt(transform.position.y + offset.y) * -100 + defaultSortingLayer;
         spriteRenderer.sortingOrder = (int)YPOSITION;
+        itemSpriteRenderer.sortingOrder = (int)YPOSITION + 1;
     }
 
     private void OnDrawGizmosSelected()

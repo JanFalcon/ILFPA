@@ -108,4 +108,11 @@ public class SliderScript : MonoBehaviour
 
         return difficulty;
     }
+
+    public void Reset()
+    {
+        easySlider.value = 0f;
+        mediumSlider.value = 0f;
+        hardSlider.value = 0f;
+    }
 }

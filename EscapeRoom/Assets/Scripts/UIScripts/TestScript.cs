@@ -9,11 +9,25 @@ public class TestScript : MonoBehaviour
     public TextMeshProUGUI text;
     public TMP_InputField answerField;
 
+    private Image answerFieldImage;
+    private Color answerFieldColor;
+
     public ComputerUIScript computerUI;
 
     private string question, answer;
     private int number = 0;
     private int tries = 0;
+
+    private void Awake()
+    {
+        GetProperties();
+    }
+
+    public void GetProperties()
+    {
+        answerFieldImage = answerField.GetComponent<Image>();
+        answerFieldColor = answerFieldImage.color;
+    }
 
     public void SetQuestionAndAnswer(string questionnaire, int number)
     {
@@ -33,16 +47,23 @@ public class TestScript : MonoBehaviour
         {
             //computerUI.Delete(number);
             computerUI.CheckAnswer(number, tries);
-            Debug.Log("Correct");
+            answerField.text = "";
         }
+        else
+        {
+            StartCoroutine(WrongAnswer());
+        }
+    }
 
-        //if(string.Equals(answerField.text, answer))
-        //{
-        //    //computerUI.Delete(number);
-        //    computerUI.CheckAnswer(number, tries);
-        //    Debug.Log("Correct");
-        //}
-        //Add wrong UI
+    private IEnumerator WrongAnswer()
+    {
+        if (!answerFieldImage)
+        {
+            GetProperties();
+        }
+        answerFieldImage.color = Color.red;
+        yield return new WaitForSeconds(0.9f);
+        answerFieldImage.color = answerFieldColor;
     }
 
     public void Back()
@@ -55,6 +76,5 @@ public class TestScript : MonoBehaviour
         {
             computerUI.Close();
         }
-
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectSortingOrder : MonoBehaviour
+public class ObjectSortingOrder : MonoBehaviour, ISaveable
 {
     private Renderer spriteRenderer;
     public int defaultSortingLayer = 0;
@@ -67,5 +67,26 @@ public class ObjectSortingOrder : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + offset, radius);
+    }
+
+    public object CaptureState()
+    {
+        return new SaveData
+        {
+            defaultSortingLayer = this.defaultSortingLayer,
+        };
+    }
+
+    public void LoadState(object state)
+    {
+        SaveData saveData = (SaveData)state;
+        defaultSortingLayer = saveData.defaultSortingLayer;
+        UpdateSortingOrder();
+    }
+
+    [System.Serializable]
+    public struct SaveData
+    {
+        public int defaultSortingLayer;
     }
 }

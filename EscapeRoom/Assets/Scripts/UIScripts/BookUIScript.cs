@@ -18,7 +18,7 @@ public class BookUIScript : MonoBehaviour
             buttons.SetActive(false);
             inputField.interactable = false;
         }
-
+        GameManager.instance.Interact();
         this.bookScript = bookScript;
     }
 
@@ -49,6 +49,7 @@ public class BookUIScript : MonoBehaviour
     {
         if (bookScript)
         {
+            GameManager.instance.UnInteract();
             bookScript.Close();
         }
     }

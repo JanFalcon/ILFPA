@@ -29,8 +29,6 @@ public class SaveSystem : MonoBehaviour
         this.subjectPath = subjectPath;
     }
 
-
-    [ContextMenu("Save")]
     public void Save()
     {
         //Dictionary<string, object> saveData = LoadFile();
@@ -38,16 +36,13 @@ public class SaveSystem : MonoBehaviour
         CaptureState(saveData);
         SaveFile(saveData);
 
-        Debug.Log("Save Successful");
     }
 
-    [ContextMenu("Load")]
     public void Load()
     {
         LoadEvent?.Invoke();
         Dictionary<string, object> saveData = LoadFile();
         LoadState(saveData);
-        Debug.Log("Load Successful");
     }
 
     private void SaveFile(object state)
@@ -111,7 +106,7 @@ public class SaveSystem : MonoBehaviour
             if (state.TryGetValue(item.Key, out object loadState))
             {
                 string gameItem = item.Key.Split('|')[1];
-                if (gameItem == "Computer")
+                if (gameItem.Equals("Computer"))
                 {
                     GameObject.FindGameObjectWithTag("Computer").GetComponent<SaveableEntity>().LoadState(loadState);
                 }
@@ -124,5 +119,14 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public void DeleteDirectory(string path)
+    {
+        Directory.Delete(path, true);
+    }
+
+    public void DeleteFile(string path)
+    {
+        File.Delete(path);
+    }
 }
 

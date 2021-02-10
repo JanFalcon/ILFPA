@@ -20,7 +20,7 @@ public class FinishRoomScript : MonoBehaviour
     {
         if(finish && collision.CompareTag("Player"))
         {
-            Debug.Log("FINISH");
+            GameManager.instance.FinishRoom();
         }
     }
 }

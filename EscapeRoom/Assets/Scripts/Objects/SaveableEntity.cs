@@ -46,7 +46,6 @@ public class SaveableEntity : MonoBehaviour
 
         foreach (ISaveable saveAble in GetComponents<ISaveable>())
         {
-            Debug.Log(saveAble.GetType().ToString());
             state[saveAble.GetType().ToString()] = saveAble.CaptureState();
         }
 
