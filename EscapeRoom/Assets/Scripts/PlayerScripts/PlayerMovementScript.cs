@@ -11,9 +11,12 @@ public class PlayerMovementScript : MonoBehaviour
     public float movementSpeed = 5f;
 
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     private Animator anim;
     private int isWalking;
+
+    private float walkTime = 0f;
 
     private void Awake()
     {
@@ -27,6 +30,9 @@ public class PlayerMovementScript : MonoBehaviour
         isWalking = Animator.StringToHash("isWalking");
 
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        //audioSource.Pause();
+        audioSource.Stop();
 
         CameraFollowScript.instance.SetTarget(transform);
     }
@@ -35,6 +41,19 @@ public class PlayerMovementScript : MonoBehaviour
     {
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveDirection = direction.normalized * movementSpeed;
+
+        if(direction != Vector2.zero)
+        {
+            walkTime += Time.deltaTime;
+            if(walkTime > 0.2f)
+            {
+                audioSource.UnPause();
+            }
+        }
+        else
+        {
+            OnDisable();
+        }
 
         //Flip(direction.x);
 
@@ -49,5 +68,14 @@ public class PlayerMovementScript : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveDirection * Time.deltaTime);
+    }
+
+    public void OnDisable()
+    {
+        audioSource.Stop();
+        audioSource.Play();
+        audioSource.Pause();
+
+        walkTime = 0f;
     }
 }

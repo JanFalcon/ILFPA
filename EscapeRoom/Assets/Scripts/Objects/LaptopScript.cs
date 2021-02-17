@@ -15,6 +15,7 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
     private SpriteRenderer spriteRenderer;
     public Sprite normal, green, red;
 
+    public float highLightTimer = 10f;
     public float timer = 0f;
     public bool startTimer = false;
     private int questionnaireCounter = 0;
@@ -109,7 +110,7 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
         //light2D.lightCookieSprite = sprite;
 
         spriteRenderer.sprite = TestQuestions() ? red : green;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(highLightTimer);
         spriteRenderer.sprite = normal;
         light2D.enabled = false;
     }
@@ -146,9 +147,12 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
     {
         if (finish)
         {
+            AudioManager.instance.Play("Correct");
             Finish();
             return;
         }
+
+        AudioManager.instance.Play("Boop");
 
         laptopUI = Instantiate(laptopPanel, canvas);
         laptopUIScript = laptopUI.GetComponent<LaptopUIScript>();

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4052129984641542685}
   - component: {fileID: -4291682538485803886}
   - component: {fileID: 7400109070706542505}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Red_Painting
   m_TagString: Untagged
   m_Icon: {fileID: 0}

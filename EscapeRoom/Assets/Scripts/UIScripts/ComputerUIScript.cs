@@ -23,10 +23,7 @@ public class ComputerUIScript : MonoBehaviour
     public TMP_InputField questionInputField;
     public TMP_InputField answerInputField;
 
-    public SliderScript sliderScript;
-
     private bool once = false;
-
 
     private void Start()
     {
@@ -82,21 +79,58 @@ public class ComputerUIScript : MonoBehaviour
 
     public void Save()
     {
-        float easyValue = sliderScript.easySlider.value / 100f;
-        float mediumValue = sliderScript.mediumSlider.value / 100f;
-        float hardValue = sliderScript.hardSlider.value / 100f;
-        float min = Mathf.Min(Mathf.Min(CheckValue(easyValue), CheckValue(mediumValue)), CheckValue(hardValue));
+        //float easyValue = sliderScript.easySlider.value / 100f;
+        //float mediumValue = sliderScript.mediumSlider.value / 100f;
+        //float hardValue = sliderScript.hardSlider.value / 100f;
+        //float min = Mathf.Min(Mathf.Min(CheckValue(easyValue), CheckValue(mediumValue)), CheckValue(hardValue));
 
         //Debug.Log(sliderScript.CheckDifficulty().ToString());
         //Debug.Log($"MIN : {min}");
-        float value = FuzzyLogic.instance.CalculateTime(min, sliderScript.CheckDifficulty());
 
-        if(computerScript.Save(value, questionInputField.text, answerInputField.text))
+        //float value = FuzzyLogic.instance.CalculateTime(min, sliderScript.CheckDifficulty());
+
+        //if(computerScript.Save(value, questionInputField.text, answerInputField.text))
+        //{
+        //    questionInputField.text = "";
+        //    answerInputField.text = "";
+        //}
+        //sliderScript.Reset();
+        int difficulty = ButtonRatingScript.instance.GetDifficulty();
+        float value = 0f;
+        switch (difficulty)
+        {
+            case 1:
+                //0
+                value = 0f;
+                break;
+            case 2:
+                //25
+                value = 25f;
+                break;
+            case 3:
+                //50
+                value = 50f;
+                break;
+            case 4:
+                //75
+                value = 75f;
+                break;
+            case 5:
+                //100
+                value = 100f;
+                break;
+            default:
+                Debug.Log($"NO Such thing... => {difficulty}");
+                break;
+        }
+
+        if (computerScript.Save(value, questionInputField.text, answerInputField.text))
         {
             questionInputField.text = "";
             answerInputField.text = "";
         }
-        sliderScript.Reset();
+        ButtonRatingScript.instance.ResetValues();
+        AudioManager.instance.Play("Boop");
         BackToAdmin();
     }
 
@@ -124,6 +158,7 @@ public class ComputerUIScript : MonoBehaviour
     {
         if (computerScript.Delete(number))
         {
+            computerScript.onTimer = false;
             //ADD UI (CORRECT)
             string difficulty = FuzzyLogic.instance.GetDifficulty();
 
@@ -144,6 +179,16 @@ public class ComputerUIScript : MonoBehaviour
             evaluationPanel.SetActive(true);
             evaluationScript.SetEvaluation($"Difficulty : {difficulty}\n{value}\nMax Value : {FuzzyLogic.instance.GetMax()}\nFuzzy Value : {FuzzyLogic.instance.GetFuzzyValue()}");
         }
+    }
+
+    public void AddAnsweredQuestions(string text)
+    {
+        computerScript.AddAnsweredQuestions(text);
+    }
+
+    public string GetTime(bool stop)
+    {
+        return computerScript.GetTime(stop);
     }
 
     public void TestPanel()

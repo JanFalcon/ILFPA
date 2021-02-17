@@ -19,6 +19,12 @@ public class LaptopUIScript : MonoBehaviour
 
     public GameObject buttons;
 
+    private AudioManager audioManager;
+    private void Start()
+    {
+        audioManager = AudioManager.instance;
+    }
+
     public void CloseAll()
     {
         testPanel.SetActive(false);
@@ -111,15 +117,26 @@ public class LaptopUIScript : MonoBehaviour
 
     public void CheckAnswer()
     {
-        if (correctAnswer.Contains(answer.text))
+        if (answer.text.Contains(correctAnswer) && answer.text != "")
         {
+            audioManager.Play("Correct");
             laptopScript.AddQuestionCtr();
             laptopScript.CheckAnswer();
+
+            answer.text = "";
+            answer.Select();
+            answer.ActivateInputField();
+
+        }
+        else
+        {
+            audioManager.Play("Error");
         }
     }
 
     public void Close()
     {
+        audioManager.Play("Boop");
         GameManager.instance.UnInteract();
         laptopScript?.Close();
     }

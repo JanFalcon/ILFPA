@@ -6,6 +6,7 @@ using System;
 public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 {
     private List<string> questionnaires;
+    private List<string> answeredQuestions;
 
     public GameObject computerPanel;
     public ComputerUIScript computerUIScript;
@@ -16,6 +17,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     private SpriteRenderer spriteRenderer;
     private Coroutine status;
 
+    public float highLightTimer = 10f;
     public float time = 1000f;
     public float tries = 1000f;
 
@@ -23,16 +25,21 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     private int questionCounter = 0;
 
     public float timer = 0f;
+    public bool onTimer = false;
 
+    private AudioManager audioManager;
     private HighlightScript highLightScript;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         questionnaires = new List<string>();
+        answeredQuestions = new List<string>();
     }
 
     private void Start()
     {
+        audioManager = AudioManager.instance;
+
         finishRoom = transform.GetChild(0).GetComponent<FinishRoomScript>();
 
         computerPanel.SetActive(false);
@@ -41,7 +48,10 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        if (onTimer)
+        {
+            timer += Time.deltaTime;
+        }
     }
 
     public void ResetTimer()
@@ -128,6 +138,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         string correctAnswer = questionnaires[questionNumber].Split('|')[2];
         if (string.Equals(correctAnswer, answer))
         {
+            audioManager.Play("Correct");
             if (removeMe)
             {
                 questionnaires.RemoveAt(questionNumber);
@@ -135,8 +146,25 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         }
         else
         {
+            audioManager.Play("Error");
             Debug.Log("WRONG");
         }
+    }
+
+    public void AddAnsweredQuestions(string text)
+    {
+        answeredQuestions.Add(text);
+    }
+
+    public string GetTime(bool stop)
+    {
+        onTimer = stop;
+        return timer.ToString("0.00");
+    }
+
+    public string[] GetAnsweredQuestions()
+    {
+        return answeredQuestions.ToArray();
     }
 
     public bool TestQuestions()
@@ -210,11 +238,14 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         if (CheckLaptopsStatus() || GameManager.instance.GetCreatorMode())
         {
+            audioManager.Play("Boop");
             computerUIScript.gameObject.SetActive(true);
+            onTimer = true;
             computerUIScript.Open();
         }
         else
         {
+            audioManager.Play("Error");
             CheckStatus();
             Close();
         }
@@ -233,7 +264,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         light2D.SetActive(true);
         spriteRenderer.sprite = finishRoom.finish ? green : red;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(highLightTimer);
         spriteRenderer.sprite = normal;
         light2D.SetActive(false);
     }
