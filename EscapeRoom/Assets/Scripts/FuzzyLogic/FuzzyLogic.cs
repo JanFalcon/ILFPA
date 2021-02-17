@@ -81,14 +81,14 @@ public class FuzzyLogic : MonoBehaviour
         {
             trueRules.Add($"Time is short : {time} and tries is low : {tries}");
             acceptedRules.Add(Mathf.Min(shortTMF, lowMF));
-            dif.Add(Item.Difficulty.Hard);
+            dif.Add(Item.Difficulty.VeryHard);
         }
         //IF time is short and tries is medium     => medium hard
         if (shortTMF > 0 && mediumMF > 0)
         {
             trueRules.Add($"Time is short : {time} and tries is medium : {tries}");
             acceptedRules.Add(Mathf.Min(shortTMF, mediumMF));
-            dif.Add(Item.Difficulty.MediumHard);
+            dif.Add(Item.Difficulty.Hard);
         }
         //IF time is short and tries is high     => medium
         if (shortTMF > 0 && highMF > 0)
@@ -103,7 +103,7 @@ public class FuzzyLogic : MonoBehaviour
         {
             trueRules.Add($"Time is medium : {time} and tries is low : {tries}");
             acceptedRules.Add(Mathf.Min(mediumTMF, lowMF));
-            dif.Add(Item.Difficulty.Hard);
+            dif.Add(Item.Difficulty.VeryHard);
         }
         //IF time is medium and tries is medium     => medium
         if (mediumTMF > 0 && mediumMF > 0)
@@ -117,7 +117,7 @@ public class FuzzyLogic : MonoBehaviour
         {
             trueRules.Add($"Time is medium : {time} and tries is high : {tries}");
             acceptedRules.Add(Mathf.Min(mediumTMF, highMF));
-            dif.Add(Item.Difficulty.EasyMedium);
+            dif.Add(Item.Difficulty.Easy);
         }
 
         //IF time is long and tries is low     => medium
@@ -132,14 +132,14 @@ public class FuzzyLogic : MonoBehaviour
         {
             trueRules.Add($"Time is long : {time} and tries is medium : {tries}");
             acceptedRules.Add(Mathf.Min(longTMF, mediumMF));
-            dif.Add(Item.Difficulty.EasyMedium);
+            dif.Add(Item.Difficulty.Easy);
         }
         //IF time is long and tries is high     => easy
         if (longTMF > 0 && highMF > 0)
         {
             trueRules.Add($"Time is long : {time} and tries is high : {tries}");
             acceptedRules.Add(Mathf.Min(longTMF, highMF));
-            dif.Add(Item.Difficulty.Easy);
+            dif.Add(Item.Difficulty.VeryEasy);
         }
 
         //Defuzzification
@@ -158,7 +158,7 @@ public class FuzzyLogic : MonoBehaviour
 
         diff = difficulty.ToString();
         this.max = max;
-        fuzzyValue = CalculateTime(max, difficulty);
+        fuzzyValue = CalculateTime(this.max, difficulty);
 
         return fuzzyValue;
     }
@@ -168,21 +168,26 @@ public class FuzzyLogic : MonoBehaviour
         float zStar = 0f;
         switch (difficulty)
         {
-            case Item.Difficulty.Easy:
-                zStar = 25f - (value * (25f - 0f));
+            case Item.Difficulty.VeryEasy:
+                //zStar = 25f - (value * (25f - 0f));
+                zStar = 0f;
                 break;
-            case Item.Difficulty.EasyMedium:
-                zStar = 50f - (value * (50f - 25f));
+            case Item.Difficulty.Easy:
+                //zStar = 50f - (value * (50f - 25f));
+                zStar = 25f;
                 break;
             case Item.Difficulty.Medium:
-                zStar = (value * (50f - 25f) + 25f);
-                break;
-            case Item.Difficulty.MediumHard:
-                zStar = 75f - (value * (75f - 50f));
+                //zStar = (value * (50f - 25f) + 25f);
+                zStar = 50f;
                 break;
             case Item.Difficulty.Hard:
-                zStar = (value * (75f - 50f)) + 50f;
+                //zStar = 75f - (value * (75f - 50f));
+                zStar = 75f;
+                break;
+            case Item.Difficulty.VeryHard:
+                //zStar = (value * (75f - 50f)) + 50f;
                 //zStar = 100f - (value * (100f - 75f));
+                zStar = 100f;
                 break;
             default:
                 break;

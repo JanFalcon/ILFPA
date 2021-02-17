@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.Experimental.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -102,10 +104,15 @@ public class GameManager : MonoBehaviour
     public void RandomRoom()
     {
         string[] subjects = SaveManager.instance.GetSubjectFiles();
-        string subject = subjects[Random.Range(0, subjects.Length - 1)].Replace($"{GameManager.instance.GetDesktopPath()}", "");
+
+        Random.InitState(DateTime.Now.Millisecond);
+        string subject = subjects[Random.Range(0, subjects.Length)].Replace($"{GameManager.instance.GetDesktopPath()}", "");
+
         string[] rooms = SaveManager.instance.GetSaveFiles(subject);
 
-        string value = rooms[Random.Range(0, rooms.Length - 1)];
+        Random.InitState(DateTime.Now.Millisecond);
+        string value = rooms[Random.Range(0, rooms.Length)];
+
         string[] roomDesc = value.Split('/');
 
         subjectName = roomDesc[roomDesc.Length - 2];
@@ -269,7 +276,7 @@ public class GameManager : MonoBehaviour
 
     public string GetDesktopPath()
     {
-        return $"{System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)}/SaveData/";
+        return $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/SaveData/";
     }
 
     public void PauseGame()
@@ -290,9 +297,14 @@ public class GameManager : MonoBehaviour
 
     public void FinishRoom()
     {
+        environment.SetActive(false);
         menuPanel.SetActive(false);
         gamePlayPanel.SetActive(false);
         savePanel.SetActive(false);
         endPanel.SetActive(true);
+
+        EndPanelScript.instance.GetValues();
+
+        AudioManager.instance.StartTheme("LittleIdea");
     }
 }

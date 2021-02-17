@@ -18,9 +18,15 @@ public class TestScript : MonoBehaviour
     private int number = 0;
     private int tries = 0;
 
+    private AudioManager audioManager;
     private void Awake()
     {
         GetProperties();
+    }
+
+    private void Start()
+    {
+        audioManager = AudioManager.instance;
     }
 
     public void GetProperties()
@@ -43,14 +49,20 @@ public class TestScript : MonoBehaviour
     public void Check()
     {
         tries++;
-        if (answerField.text.Contains(answer))
+        if (answerField.text.Contains(answer) && answerField.text != "")
         {
-            //computerUI.Delete(number);
+            audioManager.Play("Correct");
+
+            computerUI.AddAnsweredQuestions($"{FuzzyLogic.instance.GetDifficulty().ToString()}|{question} / {answer}|{computerUI.GetTime(true)} s|{tries}");
+
             computerUI.CheckAnswer(number, tries);
             answerField.text = "";
+            answerField.Select();
+            answerField.ActivateInputField();
         }
         else
         {
+            audioManager.Play("Error");
             StartCoroutine(WrongAnswer());
         }
     }

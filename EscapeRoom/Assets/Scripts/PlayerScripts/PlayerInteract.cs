@@ -42,6 +42,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.instance.StopTheme();
         playerMovement = GetComponent<PlayerMovementScript>();
     }
 

@@ -7,6 +7,13 @@ public class LampScript : MonoBehaviour, IInteractable, ISaveable
     public GameObject lampLight;
     private bool lampSwitch = false;
 
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void Close()
     {
 
@@ -19,6 +26,7 @@ public class LampScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Interact()
     {
+        audioSource?.Play();
         lampSwitch = !lampSwitch;
         lampLight.SetActive(lampSwitch);
         PlayerMovementScript.instance.enabled = true;

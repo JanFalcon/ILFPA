@@ -45,6 +45,7 @@ public class ObjectSortingOrder : MonoBehaviour, ISaveable
     {
         StartCoroutine(UpdateSortingOrderEnum());
 
+
         if(col[0] && defaultSortingLayer > 0 && !once)
         {
             foreach(Collider2D col in this.col)
@@ -71,16 +72,21 @@ public class ObjectSortingOrder : MonoBehaviour, ISaveable
 
     public object CaptureState()
     {
+        SpriteRenderer spriteRenderer2D = (SpriteRenderer)spriteRenderer;
         return new SaveData
         {
             defaultSortingLayer = this.defaultSortingLayer,
+            flipX = spriteRenderer2D.flipX,
         };
     }
 
     public void LoadState(object state)
     {
+        //SpriteRenderer spriteRenderer2D = (SpriteRenderer)spriteRenderer;
+
         SaveData saveData = (SaveData)state;
         defaultSortingLayer = saveData.defaultSortingLayer;
+        //spriteRenderer2D.flipX = saveData.flipX;
         UpdateSortingOrder();
     }
 
@@ -88,5 +94,6 @@ public class ObjectSortingOrder : MonoBehaviour, ISaveable
     public struct SaveData
     {
         public int defaultSortingLayer;
+        public bool flipX;
     }
 }

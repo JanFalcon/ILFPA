@@ -78,24 +78,24 @@ public class SliderScript : MonoBehaviour
 
     public Item.Difficulty CheckDifficulty()
     {
-        Item.Difficulty difficulty = Item.Difficulty.Easy;
+        Item.Difficulty difficulty = Item.Difficulty.VeryEasy;
 
         if(easySlider.value > 0 && mediumSlider.value > 0)
         {
-            return Item.Difficulty.EasyMedium;
+            return Item.Difficulty.Easy;
         }
         else if (mediumSlider.value > 0 && hardSlider.value > 0)
         {
-            return mediumSlider.value >= hardSlider.value ? Item.Difficulty.MediumHard : Item.Difficulty.Hard;
+            return mediumSlider.value >= hardSlider.value ? Item.Difficulty.Hard : Item.Difficulty.VeryHard;
         }
         else if(easySlider.value > 0 && hardSlider.value > 0)
         {
-            return easySlider.value >= hardSlider.value ? Item.Difficulty.Medium : Item.Difficulty.MediumHard;
+            return easySlider.value >= hardSlider.value ? Item.Difficulty.Medium : Item.Difficulty.Hard;
         }
 
         if (easySlider.value > 0)
         {
-            difficulty = Item.Difficulty.Easy;
+            difficulty = Item.Difficulty.VeryEasy;
         }
         if (mediumSlider.value > 0)
         {
@@ -103,7 +103,7 @@ public class SliderScript : MonoBehaviour
         }
         if (hardSlider.value > 0)
         {
-            difficulty = Item.Difficulty.Hard;
+            difficulty = Item.Difficulty.VeryHard;
         }
 
         return difficulty;

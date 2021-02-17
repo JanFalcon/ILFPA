@@ -17,5 +17,6 @@ public class EvaluationScript : MonoBehaviour
     public void NextQuestion()
     {
         computerScript.ResetTimer();
+        computerScript.onTimer = true;
     }
 }

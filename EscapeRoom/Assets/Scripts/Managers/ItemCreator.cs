@@ -9,7 +9,7 @@ public class ItemCreator : MonoBehaviour
     public GameObject player;
 
     public GameObject itemSlot;
-    public GameObject bookUI, blackBoardUI, greenBoardUI;
+    public GameObject bookUI, blackBoardUI, greenBoardUI, letterUI;
 
     public GameObject book, letter;
 
@@ -33,7 +33,7 @@ public class ItemCreator : MonoBehaviour
 
     public GameObject wall, leftWall, rightWall, newGround;
 
-    public GameObject laptop;
+    public GameObject laptop, game2;
 
     private void Awake()
     {
@@ -88,8 +88,13 @@ public class ItemCreator : MonoBehaviour
             case Item.GameItem.GreenBoardUI:    return greenBoardUI;
 
             case Item.GameItem.Laptop:          return laptop;
+
+            case Item.GameItem.LetterUI:        return letterUI;
+
+            case Item.GameItem.Game2:           return game2;
             default:
-                Debug.Log("No such thing..");   return null;
+                Debug.Log($"No such thing.. => {item.ToString()}");
+                return null;
         }
     }
 

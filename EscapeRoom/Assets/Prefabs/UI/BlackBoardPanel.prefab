@@ -695,6 +695,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1661771132}
+    - target: {fileID: 2286709267990379655, guid: fac944e5824856045ab83069e464ad18, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 93
+      objectReference: {fileID: 0}
     - target: {fileID: 2286709268753217816, guid: fac944e5824856045ab83069e464ad18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -787,6 +791,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1661771132}
+    - target: {fileID: 2286709269011237366, guid: fac944e5824856045ab83069e464ad18, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 93
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fac944e5824856045ab83069e464ad18, type: 3}
 --- !u!1 &5136670045330767056 stripped

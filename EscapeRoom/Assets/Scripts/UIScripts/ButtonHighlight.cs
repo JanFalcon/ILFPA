@@ -18,12 +18,18 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private float fontSize;
 
+    private AudioManager audioManager;
     private void Awake()
     {
         text = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         textBody = text.text;
 
         fontSize = text.fontSize;
+    }
+
+    private void Start()
+    {
+        audioManager = AudioManager.instance;
     }
 
     public void SetTextBody(string textBody)
@@ -35,6 +41,7 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (highLight)
         {
+            audioManager.Play("UIHover");
             text.text = $"< {textBody} >";
             text.fontSize = (fontSize + fontSizeAdder);
         }
