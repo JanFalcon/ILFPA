@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b1090f6592872d547932b358e22cd15c, type: 2}
+  - {fileID: 2100000, guid: 906ac26ab7f29a64b83e734fd6e016d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,8 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef97aba7765b1d4a9adb02e562813f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bookUI: {fileID: 0}
-  text: []
+  SpawnItem: 0
 --- !u!114 &1183314062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 020423b1fa3e56a47ba9c9625d9fd2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragging: 0

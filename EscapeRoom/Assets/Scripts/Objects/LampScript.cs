@@ -30,6 +30,7 @@ public class LampScript : MonoBehaviour, IInteractable, ISaveable
         lampSwitch = !lampSwitch;
         lampLight.SetActive(lampSwitch);
         PlayerMovementScript.instance.enabled = true;
+        PlayerInteract.instance.Close();
     }
 
     public object CaptureState()

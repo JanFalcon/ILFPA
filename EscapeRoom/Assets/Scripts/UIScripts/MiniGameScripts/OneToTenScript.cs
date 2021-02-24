@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class OneToTenScript : MonoBehaviour
@@ -10,32 +11,69 @@ public class OneToTenScript : MonoBehaviour
 
     public Transform content;
     public GameObject number;
-
+    public GameObject admin;
+    public GameObject buttons;
+    public TMP_InputField inputField;
     private bool finish = false;
     private int counter = 0;
-
-    //To be removed
-    private void Start()
+    private Game2Script game2Script;
+    public void Open(Game2Script game2Script, string text)
     {
-        CreateTask();
-    }
+        this.game2Script = game2Script;
 
-    public void Open()
-    {
+        if (GameManager.instance.GetCreatorMode())
+        {
+            CreatorMode(true, text);
+            return;
+        }
+
+        CreatorMode(false, text);
         if (!finish)
         {
+            AudioManager.instance.Play("Boop");
             CreateTask();
         }
         else
         {
+            AudioManager.instance.Play("Correct");
             Finish();
         }
+    }
+
+    public void CreatorMode(bool creator, string text)
+    {
+        //SHOW UI
+        admin?.SetActive(creator);
+        buttons?.SetActive(creator);
+
+        inputField.interactable = creator;
+        inputField.text = text;
+    }
+
+    public void Save()
+    {
+        if (game2Script.Save(inputField.text))
+        {
+            AudioManager.instance.Play("Boop");
+            Close();
+        }
+    }
+
+    public void Swap()
+    {
+        admin?.SetActive(!admin.activeSelf);
+        CreateTask();
+    }
+
+    public void Clear()
+    {
+        inputField.text = "";
     }
 
     public void CreateTask()
     {
         counter = 0;
-        for(int i = 0; i < content.childCount; i++)
+        for (int i = 0; i < content.childCount; i++)
         {
             Destroy(content.GetChild(i).gameObject);
         }
@@ -97,11 +135,13 @@ public class OneToTenScript : MonoBehaviour
 
     public void Finish()
     {
-
+        finish = true;
+        admin.SetActive(true);
     }
 
     public void Close()
     {
+        game2Script?.Close();
         Destroy(gameObject);
     }
 

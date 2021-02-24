@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Random = UnityEngine.Random;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     {
         instance = this;
 
-        foreach(Sound sound in sounds)
+        foreach (Sound sound in sounds)
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.audioClip;
@@ -27,7 +27,16 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        StartTheme("GoingHigher");
+        Random.InitState(System.DateTime.Now.Millisecond);
+
+        if (Random.Range(0, 2) == 0)
+        {
+            StartTheme("GoingHigher");
+        }
+        else
+        {
+            StartTheme("NewBeginning");
+        }
     }
 
     public Sound Play(string text)

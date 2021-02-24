@@ -8,11 +8,11 @@ public class KeyListeners : MonoBehaviour
 
     private Camera cam;
 
-    public bool isMouseDown0 = false;
-    public bool isMouseDown1 = false;
-
     public Vector2 mousePos;
 
+    private DragScript dragScript;
+
+    private bool dragging = false;
     private void Awake()
     {
         instance = this;
@@ -25,22 +25,22 @@ public class KeyListeners : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            isMouseDown0 = true;
+            dragging = true;
+            dragScript?.Dragging();
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            isMouseDown1 = true;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            isMouseDown0 = false;
+            dragging = false;
+            dragScript?.StopDragging();
         }
 
         if (Input.GetMouseButtonUp(1))
         {
-            isMouseDown1 = false;
         }
 
         if (Input.GetKey(KeyCode.LeftControl))
@@ -51,6 +51,23 @@ public class KeyListeners : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             PixelPerfect.instance.ppu = 8;
+        }
+    }
+
+    public void SetDragScript(DragScript dragScript)
+    {
+        if (this.dragScript != null)
+        {
+            return;
+        }
+        this.dragScript = dragScript;
+    }
+
+    public void RemoveDragScript()
+    {
+        if (!dragging)
+        {
+            dragScript = null;
         }
     }
 }

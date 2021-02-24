@@ -10,16 +10,17 @@ public class PlayerInteract : MonoBehaviour
     private GameObject _interactUI;
 
     public float detectionRadius = 1f;
-
+    public Vector2 offset;
     private readonly int bitMask = 1 << 9;  //Interactable Layer
     public bool InArea { get; set; } = false;
 
     private Transform canvas;
     private PlayerMovementScript playerMovement;
 
-    private IInteractable interact;
+    public IInteractable interact;
     private bool interacting = false;
-
+    private Collider2D[] col;
+    private Transform target;
     private void Awake()
     {
         instance = this;
@@ -28,6 +29,10 @@ public class PlayerInteract : MonoBehaviour
 
     public void InstantiateUI()
     {
+        if (_interactUI != null)
+        {
+            return;
+        }
         _interactUI = Instantiate(interactUI, canvas);
         _interactUI.transform.SetAsFirstSibling();
     }
@@ -48,34 +53,58 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        Collider2D col = Physics2D.OverlapCircle(transform.position, detectionRadius, bitMask);
+        col = Physics2D.OverlapCircleAll((Vector2)transform.position + offset, detectionRadius, bitMask);
 
-        if (col)
+        if (col.Length > 0)
         {
-            //Get Interface
+            //Get Nearest Collider
+            foreach (Collider2D c in col)
+            {
+
+                if (c.transform.position.y < transform.position.y)
+                {
+                    Close();
+                    return;
+                }
+
+                if (target != null)
+                {
+                    Vector2 distance1 = c.transform.position - transform.position;
+                    Vector2 distance2 = target.position - transform.position;
+
+                    if (distance1.sqrMagnitude < distance2.sqrMagnitude)
+                    {
+                        interact?.Highlight(false);
+                        target = c.transform;
+                        interact = target.GetComponent<IInteractable>();
+                        interact?.Highlight(true);
+                    }
+                }
+                else
+                {
+                    interact?.Highlight(false);
+                    target = c.transform;
+                    interact = target.GetComponent<IInteractable>();
+                    interact?.Highlight(true);
+                }
+            }
+
             if (!InArea)
             {
-                interact = col.GetComponent<IInteractable>();
-            }
-            //Highlight gameobject
-            if (!InArea && interact != null)
-            {
                 InstantiateUI();
-                interact.Highlight(true);
             }
-            InArea = true;                                                          
 
-            if (Input.GetKeyDown(KeyCode.E))
+            InArea = true;
+
+            if (Input.GetKeyDown(KeyCode.E) && interact != null)
             {
-                if (interact != null)
+                if (!interacting)
                 {
-                    if (!interacting)
-                    {
-                        playerMovement.enabled = false;
-                        interact.Interact();
-                        interacting = true;
-                        DestroyInteract();
-                    }
+                    playerMovement.enabled = false;
+
+                    interacting = true;
+                    interact.Interact();
+                    DestroyInteract();
                 }
             }
         }
@@ -90,6 +119,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void Close()
     {
+        target = null;
         InArea = false;
         interacting = false;
         DestroyInteract();
@@ -97,7 +127,6 @@ public class PlayerInteract : MonoBehaviour
         if (interact != null)
         {
             interact.Highlight(false);
-            interact.Close();
             interact = null;
         }
 
@@ -107,6 +136,6 @@ public class PlayerInteract : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + offset, detectionRadius);
     }
 }
