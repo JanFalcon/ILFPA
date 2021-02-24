@@ -11,14 +11,16 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private float timer = 0f;
-    private bool pause = false;
-
-    private bool CreatorMode = true;
 
     private bool playing = false;
+    private bool pause = false;
 
-    public TextMeshProUGUI roomDesc;
+    private float timer = 0f;
+    private float allocatedTime = 0f;
+
+    private bool CreatorMode = false;
+
+    public TextMeshProUGUI roomDesc, timerText;
     public GameObject gameCreatorUI, menuPanel;
 
     public GameObject mainMenuUI, startContentsUI, adminUISettings;
@@ -56,7 +58,25 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
+        if (playing && !pause)
+        {
+            if (!GetCreatorMode() && timer >= allocatedTime)
+            {
+                //END GAME
+
+                // playing = false;
+                Debug.Log("TIME PASSED");
+                return;
+            }
+
+            timer += Time.deltaTime;
+            float timeInMin = timer / 60f;
+            float timeInSec = timer % 60f;
+            float allocTimeInMin = allocatedTime / 60f;
+            float allocTimeinSec = allocatedTime % 60f;
+            // ?timerText.text = string.Format($"Timer : {(int)timeInMin} {0:0.0} / {1:0.0} M", timer, allocatedTime / 60f);
+            timerText.text = $"Timer : {(int)timeInMin}:{(int)timeInSec} / {(int)allocTimeInMin}:{allocTimeinSec}";
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape) && playing)
         {
@@ -71,9 +91,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float GetTimer()
+    public void SetAllocatedTime(float allocatedTime)
     {
-        return timer;
+        this.allocatedTime = allocatedTime;
     }
 
     public bool GetCreatorMode()
@@ -103,14 +123,13 @@ public class GameManager : MonoBehaviour
 
     public void RandomRoom()
     {
+        Random.InitState(DateTime.Now.Millisecond);
         string[] subjects = SaveManager.instance.GetSubjectFiles();
 
-        Random.InitState(DateTime.Now.Millisecond);
         string subject = subjects[Random.Range(0, subjects.Length)].Replace($"{GameManager.instance.GetDesktopPath()}", "");
 
         string[] rooms = SaveManager.instance.GetSaveFiles(subject);
 
-        Random.InitState(DateTime.Now.Millisecond);
         string value = rooms[Random.Range(0, rooms.Length)];
 
         string[] roomDesc = value.Split('/');
@@ -125,7 +144,7 @@ public class GameManager : MonoBehaviour
 
     public void GetSubjects()
     {
-        for(int i = 0; i < subjectViewerContents.transform.childCount; i++)
+        for (int i = 0; i < subjectViewerContents.transform.childCount; i++)
         {
             Destroy(subjectViewerContents.transform.GetChild(i).gameObject);
         }
@@ -236,7 +255,7 @@ public class GameManager : MonoBehaviour
     public void CreateGame()
     {
         playing = true;
-        PlayerPrefs.SetInt("Admin", 0);
+        PlayerPrefs.SetInt("Admin", 1);
         environment.SetActive(true);
         light2D.intensity = 0.5f;
 
@@ -263,7 +282,7 @@ public class GameManager : MonoBehaviour
         gameCreatorUI.SetActive(creator);
         environment.SetActive(true);
 
-        light2D.intensity = creator? 0.6f : 0.03f;
+        light2D.intensity = creator ? 0.6f : 0.03f;
 
         roomDesc.text = $"Subject : {subjectName} | Room : {roomName}";
 
@@ -306,5 +325,10 @@ public class GameManager : MonoBehaviour
         EndPanelScript.instance.GetValues();
 
         AudioManager.instance.StartTheme("LittleIdea");
+
+        foreach (SaveableEntity save in FindObjectsOfType<SaveableEntity>())
+        {
+            Destroy(save.gameObject);
+        }
     }
 }

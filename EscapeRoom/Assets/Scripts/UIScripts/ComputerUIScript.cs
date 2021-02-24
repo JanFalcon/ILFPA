@@ -43,16 +43,15 @@ public class ComputerUIScript : MonoBehaviour
         gameObject.SetActive(true);
         GameManager.instance.Interact();
 
-        if (!GameManager.instance.GetCreatorMode())
-        {
-            CloseAll();
-            TestPanel();
-        }
-
-        if (!once)
+        if (!once && !GameManager.instance.GetCreatorMode())
         {
             once = true;
             computerScript.ResetTimer();
+        }
+
+        if (!GameManager.instance.GetCreatorMode())
+        {
+            TestPanel();
         }
     }
 
@@ -79,50 +78,8 @@ public class ComputerUIScript : MonoBehaviour
 
     public void Save()
     {
-        //float easyValue = sliderScript.easySlider.value / 100f;
-        //float mediumValue = sliderScript.mediumSlider.value / 100f;
-        //float hardValue = sliderScript.hardSlider.value / 100f;
-        //float min = Mathf.Min(Mathf.Min(CheckValue(easyValue), CheckValue(mediumValue)), CheckValue(hardValue));
-
-        //Debug.Log(sliderScript.CheckDifficulty().ToString());
-        //Debug.Log($"MIN : {min}");
-
-        //float value = FuzzyLogic.instance.CalculateTime(min, sliderScript.CheckDifficulty());
-
-        //if(computerScript.Save(value, questionInputField.text, answerInputField.text))
-        //{
-        //    questionInputField.text = "";
-        //    answerInputField.text = "";
-        //}
-        //sliderScript.Reset();
         int difficulty = ButtonRatingScript.instance.GetDifficulty();
-        float value = 0f;
-        switch (difficulty)
-        {
-            case 1:
-                //0
-                value = 0f;
-                break;
-            case 2:
-                //25
-                value = 25f;
-                break;
-            case 3:
-                //50
-                value = 50f;
-                break;
-            case 4:
-                //75
-                value = 75f;
-                break;
-            case 5:
-                //100
-                value = 100f;
-                break;
-            default:
-                Debug.Log($"NO Such thing... => {difficulty}");
-                break;
-        }
+        float value = (difficulty - 1) * 25f;
 
         if (computerScript.Save(value, questionInputField.text, answerInputField.text))
         {
@@ -141,13 +98,13 @@ public class ComputerUIScript : MonoBehaviour
 
     public void SetQuestionViewer()
     {
-        for(int i = 0; i < questionViewerViewPort.transform.childCount; i++)
+        for (int i = 0; i < questionViewerViewPort.transform.childCount; i++)
         {
             Destroy(questionViewerViewPort.transform.GetChild(i).gameObject);
         }
 
         int ctr = 0;
-        foreach(string question in computerScript.GetQuestions())
+        foreach (string question in computerScript.GetQuestions())
         {
             Instantiate(questionViewerContents, questionViewerViewPort.transform).GetComponent<QuestionViewer>().SetText(question, ctr, this);
             ctr++;
@@ -159,7 +116,7 @@ public class ComputerUIScript : MonoBehaviour
         if (computerScript.Delete(number))
         {
             computerScript.onTimer = false;
-            //ADD UI (CORRECT)
+
             string difficulty = FuzzyLogic.instance.GetDifficulty();
 
             //Set New Values
@@ -170,7 +127,7 @@ public class ComputerUIScript : MonoBehaviour
             //Evaluation
             string[] acceptedRules = FuzzyLogic.instance.GetAcceptedRules();
             string value = "";
-            foreach(string rules in acceptedRules)
+            foreach (string rules in acceptedRules)
             {
                 value += $"{rules}\n";
             }

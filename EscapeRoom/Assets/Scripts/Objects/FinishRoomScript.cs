@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishRoomScript : MonoBehaviour
+public class FinishRoomScript : MonoBehaviour, IInteractable
 {
     public bool finish = false;
+    private HighlightScript highlightScript;
+
+    private void Awake()
+    {
+        highlightScript = GetComponent<HighlightScript>();
+    }
 
     public void SetFinish(bool finish)
     {
@@ -16,11 +22,22 @@ public class FinishRoomScript : MonoBehaviour
         GetComponent<SpriteRenderer>().sortingOrder -= 100;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //Interface
+    // *IInteractable
+    public void Highlight(bool highlight)
     {
-        if(finish && collision.CompareTag("Player"))
+        highlightScript?.Highlight(highlight);
+    }
+
+    public void Interact()
+    {
+        if (finish)
         {
             GameManager.instance.FinishRoom();
         }
+    }
+
+    public void Close()
+    {
     }
 }

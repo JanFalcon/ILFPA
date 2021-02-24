@@ -16,11 +16,10 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     public GameObject light2D;
     private SpriteRenderer spriteRenderer;
     private Coroutine status;
-
+    public static float allocatedTime;
     public float highLightTimer = 10f;
-    public float time = 1000f;
-    public float tries = 1000f;
-
+    public float time = 0;
+    public float tries = 6;
     private int questionNumber = 0;
     private int questionCounter = 0;
 
@@ -76,11 +75,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         this.tries = tries;
     }
 
-    public int GetQuestionNumber()
-    {
-        return CalculateNextQUestion(FuzzyLogic.instance.FuzzyRules(time, tries));
-    }
-
     public string GetQuestion(int number)
     {
         if (questionnaires.Count > 0)
@@ -88,17 +82,19 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
             questionCounter++;
             return questionnaires[number];
         }
-        else
-        {
-            return "NO QUESTIONS IN THE SYSTEM!";
-        }
+        return "NO QUESTIONS IN THE SYSTEM!";
     }
 
+    public int GetQuestionNumber()
+    {
+        return CalculateNextQUestion(FuzzyLogic.instance.FuzzyRules(time, tries));
+    }
+
+    //TODO: CHANGE CALCULATION!
     public int CalculateNextQUestion(float value)
     {
         float[] fuzzyValues = ListQuestions();
         float difference = 1000f;
-        //float targetQuestion = 0f;
 
         int ctr = 0;
         foreach (float fuzzyValue in fuzzyValues)
@@ -107,15 +103,12 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
             if (dif < difference)
             {
                 difference = dif;
-                //targetQuestion = fuzzyValue;
                 questionNumber = ctr;
             }
 
             ctr++;
         }
 
-        //Debug.Log(targetQuestion);
-        //return questionnaires[questionNumber];
         return questionNumber;
     }
 
@@ -129,7 +122,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
             ctr++;
         }
         //Array.Sort(fuzzyValues);
-
         return fuzzyValues;
     }
 
@@ -169,7 +161,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool TestQuestions()
     {
-        if(questionCounter > 20 || questionnaires.Count == 0)
+        if (questionCounter > 20 || questionnaires.Count == 0)
         {
             Finished();
         }
@@ -207,7 +199,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     public bool CheckLaptopsStatus()
     {
         bool value = true;
-        foreach(LaptopScript laptopScript in FindObjectsOfType<LaptopScript>())
+        foreach (LaptopScript laptopScript in FindObjectsOfType<LaptopScript>())
         {
             laptopScript.CheckStatus();
             if (!laptopScript.GetFinish())
@@ -253,7 +245,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public void CheckStatus()
     {
-        if(status != null)
+        if (status != null)
         {
             StopCoroutine(status);
         }
@@ -271,7 +263,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Close()
     {
-        PlayerMovementScript.instance.enabled = true;
+        PlayerInteract.instance.Close();
     }
 
     //ISaveable...
@@ -280,6 +272,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         return new SaveData
         {
+            saveAllocatedTime = (allocatedTime * 60f),
             questionnaires = this.questionnaires.ToArray(),
         };
     }
@@ -289,16 +282,18 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         finishRoom.SetFinish(false);
 
         SaveData saveData = (SaveData)state;
+        GameManager.instance.SetAllocatedTime(saveData.saveAllocatedTime);
         questionnaires = new List<string>(saveData.questionnaires);
         questionCounter = 0;
-        time = 1000f;
-        tries = 1000f;
+        time = 0;
+        tries = 6;
         computerUIScript.SetOnce();
     }
 
     [Serializable]
     public struct SaveData
     {
+        public float saveAllocatedTime;
         public string[] questionnaires;
     }
 }

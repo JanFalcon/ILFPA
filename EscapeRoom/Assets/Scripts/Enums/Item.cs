@@ -74,6 +74,19 @@ public class Item
         Laptop,
         Game1,
         Game2,
+        Game3,
+        Game4,
+        Game5,
+
+        tech1,
+        tech2,
+        tech3,
+        tech4,
+
+        Map1,
+        Map2,
+        Globe1,
+        Globe2,
     }
     public GameItem gameItem;
 

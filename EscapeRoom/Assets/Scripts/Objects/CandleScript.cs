@@ -21,6 +21,7 @@ public class CandleScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Close()
     {
+        
     }
 
     public void Highlight(bool highlight)
@@ -42,7 +43,7 @@ public class CandleScript : MonoBehaviour, IInteractable, ISaveable
             audioSource.Pause();
         }
 
-        PlayerMovementScript.instance.enabled = true;
+        PlayerInteract.instance.Close();
     }
 
 

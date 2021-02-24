@@ -19,6 +19,16 @@ public class DragScript : MonoBehaviour
         GetKeyListener();
     }
 
+    private void Start()
+    {
+        enabled = GameManager.instance.GetCreatorMode();
+    }
+
+    private void OnDisable()
+    {
+        highlightScript = null;
+    }
+
     public void GetKeyListener()
     {
         highlightScript = GetComponent<HighlightScript>();
@@ -69,6 +79,7 @@ public class DragScript : MonoBehaviour
         {
             highlightScript.Highlight(true);
         }
+        keyListener.SetDragScript(this);
     }
 
     private void OnMouseExit()
@@ -77,17 +88,18 @@ public class DragScript : MonoBehaviour
         {
             highlightScript.Highlight(false);
         }
+        keyListener.RemoveDragScript();
     }
 
-    private void OnMouseDown()
-    {
-        Dragging();
-    }
+    // private void OnMouseDown()
+    // {
+    //     Dragging();
+    // }
 
-    private void OnMouseUp()
-    {
-        dragging = false;
-    }
+    // private void OnMouseUp()
+    // {
+    //     dragging = false;
+    // }
 
     public void Dragging()
     {
@@ -98,6 +110,11 @@ public class DragScript : MonoBehaviour
         Vector3 mousePos = keyListener.mousePos;
         startPos = new Vector2(mousePos.x - transform.localPosition.x, mousePos.y - transform.localPosition.y);
         dragging = true;
+    }
+
+    public void StopDragging()
+    {
+        dragging = false;
     }
 
     //private void OnMouseDrag()

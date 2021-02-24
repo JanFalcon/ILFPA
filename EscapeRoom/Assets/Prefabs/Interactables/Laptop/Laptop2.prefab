@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4304541449337476920}
   - component: {fileID: 6592737792613012585}
   - component: {fileID: 3362897413098770620}
+  - component: {fileID: -4785767052905571885}
   m_Layer: 9
   m_Name: Laptop2
   m_TagString: Untagged
@@ -100,7 +101,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 906ac26ab7f29a64b83e734fd6e016d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,6 +209,19 @@ MonoBehaviour:
   radius: 0.1
   offset: {x: 0, y: -0.5, z: 0}
   update: 0
+--- !u!114 &-4785767052905571885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850970264928947736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c48fd50ce634a45ac2a6a0eab4458b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlight: 0.05
 --- !u!1 &2850970265575310992
 GameObject:
   m_ObjectHideFlags: 0

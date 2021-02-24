@@ -63,8 +63,7 @@ public class BookScript : MonoBehaviour, IInteractable, ISaveable
         {
             Destroy(bookUI);
         }
-
-        PlayerMovementScript.instance.enabled = true;
+        PlayerInteract.instance.Close();
     }
 
     public object CaptureState()

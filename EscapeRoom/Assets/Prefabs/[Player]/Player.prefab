@@ -366,9 +366,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06, y: 0}
+  m_Offset: {x: -0.06, y: 0.075}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.35
 --- !u!50 &5421195123555447278
 Rigidbody2D:
   serializedVersion: 4
@@ -435,7 +435,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactUI: {fileID: 5613933345921025534, guid: 972a4913d7997a4478762e492b9b8f1c, type: 3}
-  detectionRadius: 0.7
+  detectionRadius: 0.65
+  offset: {x: -0.05, y: 0.3}
 --- !u!114 &5421195123555447269
 MonoBehaviour:
   m_ObjectHideFlags: 0

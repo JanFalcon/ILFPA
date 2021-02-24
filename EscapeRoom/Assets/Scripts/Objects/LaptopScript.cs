@@ -140,7 +140,11 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
         {
             highLightScript.Highlight(highlight);
         }
-        GetHighLightScript();
+        else
+        {
+            GetHighLightScript();
+            Highlight(highlight);
+        }
     }
 
     public void Interact()
@@ -166,7 +170,7 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
 
     public void Close()
     {
-        PlayerMovementScript.instance.enabled = true;
+        PlayerInteract.instance.Close();
         Destroy(laptopUI);
     }
 

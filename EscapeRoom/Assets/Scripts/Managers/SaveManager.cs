@@ -12,6 +12,7 @@ public class SaveManager : MonoBehaviour
 
     public TMP_InputField subjectName;
     public TMP_InputField saveName;
+    public TMP_InputField timerField;
 
     private void Awake()
     {
@@ -68,16 +69,23 @@ public class SaveManager : MonoBehaviour
 
     public void Save()
     {
-        if (string.IsNullOrEmpty(subjectName.text) || string.IsNullOrEmpty(saveName.text))
+        if (string.IsNullOrEmpty(subjectName.text) || string.IsNullOrEmpty(saveName.text) || string.IsNullOrEmpty(timerField.text))
         {
-            Debug.Log("NO VALUES");
+            //!Show Error 
+
             return;
         }
         SaveSystem.instance.SetPath(GetFullPath(), GetSubjectPath());
+        ComputerScript.allocatedTime = float.Parse(timerField.text);
         SaveSystem.instance.Save();
 
         PlayerPrefs.SetInt("Admin", 1);
         GameManager.instance.EndGame();
+    }
+
+    public IEnumerator ErrorWarning()
+    {
+        yield return null;
     }
 
     public string[] GetSubjectFiles()
@@ -93,7 +101,8 @@ public class SaveManager : MonoBehaviour
     public string[] GetSaveFiles(string subject)
     {
         string path = $"{GameManager.instance.GetDesktopPath()}{subject.ToLower()}/";
-        if (!Directory.Exists(path)){
+        if (!Directory.Exists(path))
+        {
             Directory.CreateDirectory(path);
         }
         return Directory.GetFiles(path);
