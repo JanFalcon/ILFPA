@@ -11,7 +11,9 @@ public class ButtonRatingScript : MonoBehaviour
     public TextMeshProUGUI difficultyText;
 
     public GameObject[] buttons;
-    private int difficulty;
+    private int difficulty = 1;
+    private string difficultTextValue = "Very Easy";
+    private Color semiWhite = new Color(1f, 1f, 1f, 0.5f);
 
     private void Awake()
     {
@@ -25,12 +27,34 @@ public class ButtonRatingScript : MonoBehaviour
 
     public void ResetValues()
     {
-        HighLightButtons(1, "Very Easy");
+        difficulty = 1;
+        difficultTextValue = "Very Easy";
+        HighLightButtons(difficulty, difficultTextValue);
+    }
+
+    public void SemiHighLightButtons(int number, string text)
+    {
+        difficultyText.text = $"Difficulty Rating : {text}";
+
+        for (int i = 0; i < number; i++)
+        {
+            // if (i < difficulty)
+            // {
+            //     continue;
+            // }
+            buttons[i].GetComponent<Image>().color = semiWhite;
+        }
+
+        for (int i = number; i < buttons.Length; i++)
+        {
+            buttons[i].GetComponent<Image>().color = Color.black;
+        }
     }
 
     public void HighLightButtons(int number, string text)
     {
         difficulty = number;
+        difficultTextValue = text;
         difficultyText.text = $"Difficulty Rating : {text}";
 
         for (int i = 0; i < number; i++)
@@ -44,27 +68,57 @@ public class ButtonRatingScript : MonoBehaviour
         }
     }
 
+    public void ExitHighLight()
+    {
+        HighLightButtons(difficulty, difficultTextValue);
+    }
+
     public void HighLight1()
     {
-        HighLightButtons(1, "Very Easy");
+        SemiHighLightButtons(1, "Very Easy");
     }
 
     public void HighLight2()
     {
-        HighLightButtons(2, "Easy");
+        SemiHighLightButtons(2, "Easy");
     }
 
     public void HighLight3()
     {
-        HighLightButtons(3, "Medium");
+        SemiHighLightButtons(3, "Medium");
     }
 
     public void HighLight4()
     {
-        HighLightButtons(4, "Hard");
+        SemiHighLightButtons(4, "Hard");
     }
 
     public void HighLight5()
+    {
+        SemiHighLightButtons(5, "Very Hard");
+    }
+
+    public void Click1()
+    {
+        HighLightButtons(1, "Very Easy");
+    }
+
+    public void Click2()
+    {
+        HighLightButtons(2, "Easy");
+    }
+
+    public void Click3()
+    {
+        HighLightButtons(3, "Medium");
+    }
+
+    public void Click4()
+    {
+        HighLightButtons(4, "Hard");
+    }
+
+    public void Click5()
     {
         HighLightButtons(5, "Very Hard");
     }

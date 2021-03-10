@@ -556,7 +556,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0.88235295}
     m_PressedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 0.88235295}
     m_SelectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.88235295}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.88235295}
+    m_DisabledColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.88235295}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -619,7 +619,7 @@ MonoBehaviour:
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
   m_Text: 
   m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
+  m_CaretWidth: 2
   m_ReadOnly: 0
   m_RichText: 1
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

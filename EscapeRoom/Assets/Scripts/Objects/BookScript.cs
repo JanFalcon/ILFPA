@@ -7,7 +7,7 @@ using System;
 [RequireComponent(typeof(HighlightScript))]
 public class BookScript : MonoBehaviour, IInteractable, ISaveable
 {
-    public Item.GameItem SpawnItem;
+    public GameObject spawnItem;
 
     private string textBody = "";
     private GameObject bookUI;
@@ -51,7 +51,7 @@ public class BookScript : MonoBehaviour, IInteractable, ISaveable
     public void Interact()
     {
         //Instantiate UI
-        bookUI = ItemCreator.instance.SpawnItem(SpawnItem, canvas);
+        bookUI = Instantiate(spawnItem, canvas);
         BookUIScript bookUIScript = bookUI.GetComponent<BookUIScript>();
         bookUIScript.SetBookScript(this);
         bookUIScript.SetText(textBody);

@@ -18,6 +18,7 @@ public class PlayerInteract : MonoBehaviour
     private PlayerMovementScript playerMovement;
 
     public IInteractable interact;
+    private bool interactable = false;
     private bool interacting = false;
     private Collider2D[] col;
     private Transform target;
@@ -63,14 +64,15 @@ public class PlayerInteract : MonoBehaviour
 
                 if (c.transform.position.y < transform.position.y)
                 {
-                    Close();
-                    return;
+                    continue;
                 }
 
                 if (target != null)
                 {
                     Vector2 distance1 = c.transform.position - transform.position;
                     Vector2 distance2 = target.position - transform.position;
+
+                    interactable = true;
 
                     if (distance1.sqrMagnitude < distance2.sqrMagnitude)
                     {
@@ -89,19 +91,19 @@ public class PlayerInteract : MonoBehaviour
                 }
             }
 
-            if (!InArea)
+            if (!InArea && interactable)
             {
                 InstantiateUI();
+                InArea = true;
             }
 
-            InArea = true;
 
             if (Input.GetKeyDown(KeyCode.E) && interact != null)
             {
                 if (!interacting)
                 {
+                    GameManager.instance.Interact();
                     playerMovement.enabled = false;
-
                     interacting = true;
                     interact.Interact();
                     DestroyInteract();
@@ -121,6 +123,7 @@ public class PlayerInteract : MonoBehaviour
     {
         target = null;
         InArea = false;
+        interactable = false;
         interacting = false;
         DestroyInteract();
 

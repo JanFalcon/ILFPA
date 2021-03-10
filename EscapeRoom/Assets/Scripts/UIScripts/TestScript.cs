@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class TestScript : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public TMP_InputField answerField;
+    public TMP_InputField questionField, answerField;
 
     private Image answerFieldImage;
     private Color answerFieldColor;
@@ -43,13 +42,14 @@ public class TestScript : MonoBehaviour
         answer = value[2];
         tries = 0;
 
-        text.text = question;
+        questionField.text = question;
     }
 
     public void Check()
     {
         tries++;
-        if (answerField.text.Contains(answer) && answerField.text != "")
+        string answerText = answerField.text.ToLower();
+        if (answerText.Contains(answer) && !string.IsNullOrEmpty(answerText))
         {
             audioManager.Play("Correct");
 

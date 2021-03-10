@@ -6,10 +6,16 @@ using UnityEngine.UI;
 
 public class QuestionViewer2 : MonoBehaviour
 {
+    private Transform canvas;
     public RectTransform rectTransform;
     public TextMeshProUGUI text;
 
     private LaptopUIScript laptopUI;
+
+    private void Awake()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+    }
     public void SetText(string text, int number, LaptopUIScript laptopUI)
     {
         this.laptopUI = laptopUI;
@@ -30,9 +36,16 @@ public class QuestionViewer2 : MonoBehaviour
 
     public void Delete()
     {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
+    }
+
+    public bool DeleteThis()
+    {
         if (laptopUI.Delete(text.text))
         {
             Destroy(gameObject);
         }
+        return true;
     }
 }

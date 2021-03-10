@@ -23,7 +23,7 @@ public class ComputerUIScript : MonoBehaviour
     public TMP_InputField questionInputField;
     public TMP_InputField answerInputField;
 
-    private bool once = false;
+    private bool once = false, onceAgain = false;
 
     private void Start()
     {
@@ -41,12 +41,11 @@ public class ComputerUIScript : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
-        GameManager.instance.Interact();
 
         if (!once && !GameManager.instance.GetCreatorMode())
         {
-            once = true;
             computerScript.ResetTimer();
+            once = true;
         }
 
         if (!GameManager.instance.GetCreatorMode())
@@ -73,6 +72,7 @@ public class ComputerUIScript : MonoBehaviour
         questionContents.SetActive(false);
         questionViewer.SetActive(true);
 
+        computerScript.SampleQuestions();
         SetQuestionViewer();
     }
 
@@ -152,6 +152,12 @@ public class ComputerUIScript : MonoBehaviour
     {
         CloseAll();
         testPanel.SetActive(true);
+
+        if (!onceAgain)
+        {
+            computerScript.SampleQuestions();
+            onceAgain = true;
+        }
 
         if (computerScript.TestQuestions())
         {

@@ -1,51 +1,65 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CandleScript : MonoBehaviour, IInteractable, ISaveable
 {
-    private GameObject flames;
-    private bool flameOn;
+    public GameObject flames;
+    private bool flameOn = false;
     private AudioSource audioSource;
+    private HighlightScript highlightScript;
+    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer[] flamesSpriteRenderers;
+    private void Awake()
+    {
+        highlightScript = GetComponent<HighlightScript>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource?.Pause();
+    }
 
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Pause();
-
-        flames = transform.GetChild(0).gameObject;
-        flameOn = false;
-        flames?.SetActive(flameOn);
+        AudioManager.instance.AddMixerGroup(audioSource, "SFX");
     }
 
     public void Close()
     {
-        
+
     }
 
     public void Highlight(bool highlight)
     {
+        highlightScript?.Highlight(highlight);
     }
 
     public void Interact()
     {
-        flameOn = !flameOn;
+        TurnOn();
 
+        GameManager.instance.UnInteract();
+        PlayerInteract.instance.Close();
+    }
+
+    public void TurnOn()
+    {
+        flameOn = !flameOn;
         flames?.SetActive(flameOn);
 
         if (flameOn)
         {
-            audioSource.UnPause();
+            audioSource?.UnPause();
+            foreach (SpriteRenderer spriteRend in flamesSpriteRenderers)
+            {
+                spriteRend.sortingOrder = spriteRenderer.sortingOrder + 10;
+            }
         }
         else
         {
             audioSource.Pause();
         }
-
-        PlayerInteract.instance.Close();
     }
-
 
     public object CaptureState()
     {
@@ -59,8 +73,9 @@ public class CandleScript : MonoBehaviour, IInteractable, ISaveable
     public void LoadState(object state)
     {
         SaveData saveData = (SaveData)state;
-        this.flameOn = saveData.flameOn;
-        flames?.SetActive(this.flameOn);
+
+        flameOn = !saveData.flameOn;
+        TurnOn();
     }
 
     [System.Serializable]

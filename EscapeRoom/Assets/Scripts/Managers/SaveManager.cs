@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using TMPro;
 using System.IO;
@@ -8,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
+    private Transform canvas;
     public static SaveManager instance;
 
     public TMP_InputField subjectName;
@@ -17,6 +19,7 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
     public object CaptureState(string item, Vector3 pos, Quaternion rot)
@@ -44,8 +47,16 @@ public class SaveManager : MonoBehaviour
 
     public GameObject LoadObject(string item)
     {
-        Item.GameItem gameItem = (Item.GameItem)System.Enum.Parse(typeof(Item.GameItem), item);
-        return ItemCreator.instance.SpawnItem(gameItem, Vector3.zero);
+        try
+        {
+            Item.GameItem gameItem = (Item.GameItem)System.Enum.Parse(typeof(Item.GameItem), item);
+            return ItemCreator.instance.SpawnItem(gameItem, Vector3.zero);
+        }
+        catch
+        {
+            Debug.Log("ERRORER");
+            return null;
+        }
     }
 
     [Serializable]
@@ -72,20 +83,40 @@ public class SaveManager : MonoBehaviour
         if (string.IsNullOrEmpty(subjectName.text) || string.IsNullOrEmpty(saveName.text) || string.IsNullOrEmpty(timerField.text))
         {
             //!Show Error 
+            if (string.IsNullOrEmpty(subjectName.text))
+            {
+                StartCoroutine(ErrorWarning(subjectName));
+            }
+
+            if (string.IsNullOrEmpty(saveName.text))
+            {
+                StartCoroutine(ErrorWarning(saveName));
+            }
 
             return;
         }
+
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = SaveThis;
+    }
+
+    public bool SaveThis()
+    {
         SaveSystem.instance.SetPath(GetFullPath(), GetSubjectPath());
         ComputerScript.allocatedTime = float.Parse(timerField.text);
         SaveSystem.instance.Save();
 
         PlayerPrefs.SetInt("Admin", 1);
         GameManager.instance.EndGame();
+        return true;
     }
 
-    public IEnumerator ErrorWarning()
+    public IEnumerator ErrorWarning(TMP_InputField errorField)
     {
-        yield return null;
+        Image image = errorField.GetComponent<Image>();
+        image.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        image.color = Color.white;
     }
 
     public string[] GetSubjectFiles()

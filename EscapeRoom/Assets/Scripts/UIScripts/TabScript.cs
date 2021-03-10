@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TabScript : MonoBehaviour
 {
     public bool activeOnStart = false;
     public GameObject otherTab;
     private GameObject tabContents;
+
+    public ScrollRect scrollRect;
+    public RectTransform myContents, myViewPort;
 
     void Awake()
     {
@@ -20,6 +24,8 @@ public class TabScript : MonoBehaviour
         {
             otherTab.SetActive(false);
         }
+        scrollRect.content = myContents;
+        scrollRect.viewport = myViewPort;
         tabContents.SetActive(true);
     }
 }

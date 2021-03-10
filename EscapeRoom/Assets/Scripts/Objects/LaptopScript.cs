@@ -53,7 +53,7 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool Save(string question, string answer)
     {
-        questionnaires.Add($"{question}|{answer}");
+        questionnaires.Add($"{question}|{answer.ToLower()}");
         return true;
     }
 

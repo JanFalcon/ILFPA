@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4830331246601798079}
   - component: {fileID: 4830331246601798078}
   - component: {fileID: 846502029054522123}
-  - component: {fileID: 7757005713038899066}
   - component: {fileID: 1016931899663932815}
-  - component: {fileID: -4052129984641542685}
-  - component: {fileID: -4291682538485803886}
+  - component: {fileID: 7757005713038899066}
   - component: {fileID: 7400109070706542505}
+  - component: {fileID: -4291682538485803886}
+  - component: {fileID: -4052129984641542685}
   m_Layer: 0
   m_Name: Red_Painting
   m_TagString: Untagged
@@ -114,19 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 0.8125}
   m_EdgeRadius: 0
---- !u!114 &7757005713038899066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4830331246601798076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 020423b1fa3e56a47ba9c9625d9fd2bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dragging: 0
 --- !u!114 &1016931899663932815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +130,7 @@ MonoBehaviour:
   radius: 0.1
   offset: {x: 0, y: 0, z: 0}
   update: 0
---- !u!114 &-4052129984641542685
+--- !u!114 &7757005713038899066
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,24 +139,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4830331246601798076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae7b48e9f88cc68488664fee17e4eafa, type: 3}
+  m_Script: {fileID: 11500000, guid: 020423b1fa3e56a47ba9c9625d9fd2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  gameItem: 7
-  createItem: 1
---- !u!114 &-4291682538485803886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4830331246601798076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  dragging: 0
 --- !u!114 &7400109070706542505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,3 +156,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: 0.05
+--- !u!114 &-4291682538485803886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830331246601798076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4052129984641542685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830331246601798076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7b48e9f88cc68488664fee17e4eafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+  gameItem: 24
+  createItem: 1
