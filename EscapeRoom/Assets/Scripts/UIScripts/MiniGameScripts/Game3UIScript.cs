@@ -108,6 +108,7 @@ public class Game3UIScript : MonoBehaviour
 
     public void Close()
     {
+        GameManager.instance.UnInteract();
         game3Script?.Close();
     }
 }

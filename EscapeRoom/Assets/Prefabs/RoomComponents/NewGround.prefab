@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 6411139977374277214}
   - component: {fileID: 6411139977374277215}
   - component: {fileID: 6411139977374277209}
+  - component: {fileID: 7107330218454843442}
   - component: {fileID: 6411139977374277208}
-  - component: {fileID: 1247166316266257947}
+  - component: {fileID: 6824451929537977573}
   - component: {fileID: -4912426969559499206}
+  - component: {fileID: 1247166316266257947}
   m_Layer: 0
   m_Name: NewGround
   m_TagString: Untagged
@@ -72,10 +74,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1971079357
-  m_SortingLayer: -1
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 3008108694624952794, guid: 2dd56d2dce9c36a45bb9c592cd627134, type: 3}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -300
+  m_Sprite: {fileID: 21300000, guid: 44e0ad9ff700b654bbbdb5a7b2edb1f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,7 +105,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.0625, y: 2.0625}
+    oldSize: {x: 2.1875, y: 2.1875}
     newSize: {x: 1.9375, y: 1.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -112,6 +114,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9375, y: 1.9375}
   m_EdgeRadius: 0
+--- !u!114 &7107330218454843442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411139977374277212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dee9f5c0808c594a94e025923271377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSortingLayer: -500
+  radius: 0.1
+  offset: {x: 0, y: 0, z: 0}
+  update: 0
 --- !u!114 &6411139977374277208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +143,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragging: 0
+--- !u!114 &6824451929537977573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411139977374277212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c48fd50ce634a45ac2a6a0eab4458b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlight: 0.05
+--- !u!114 &-4912426969559499206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411139977374277212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1247166316266257947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,17 +181,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
-  gameItem: 34
+  gameItem: 49
   createItem: 1
---- !u!114 &-4912426969559499206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411139977374277212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8290633319bcf44f9be227f92ed05e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

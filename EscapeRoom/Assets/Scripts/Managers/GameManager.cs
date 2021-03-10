@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
+﻿using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.SceneManagement;
@@ -11,7 +8,7 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    private Transform canvas;
     private bool playing = false;
     private bool pause = false;
 
@@ -23,7 +20,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI roomDesc, timerText;
     public GameObject gameCreatorUI, menuPanel;
 
-    public GameObject mainMenuUI, startContentsUI, adminUISettings;
+    public GameObject mainMenuUI, startContentsUI, adminUISettings, settingsUI;
 
     public GameObject gamePlayPanel, savePanel, endPanel, pausePanel;
 
@@ -39,13 +36,18 @@ public class GameManager : MonoBehaviour
 
     public Light2D light2D;
 
+    public Gradient timeColor;
+
     private void Awake()
     {
         instance = this;
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
     }
 
     private void Start()
     {
+        Random.InitState(DateTime.Now.Millisecond);
+
         playing = false;
         environment.SetActive(false);
         if (PlayerPrefs.GetInt("Admin") == 1)
@@ -63,9 +65,9 @@ public class GameManager : MonoBehaviour
             if (!GetCreatorMode() && timer >= allocatedTime)
             {
                 //END GAME
-
-                // playing = false;
-                Debug.Log("TIME PASSED");
+                playing = false;
+                FinishRoom();
+                EndPanelScript.instance.title.text = "Room Failed!";
                 return;
             }
 
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
             float allocTimeinSec = allocatedTime % 60f;
             // ?timerText.text = string.Format($"Timer : {(int)timeInMin} {0:0.0} / {1:0.0} M", timer, allocatedTime / 60f);
             timerText.text = $"Timer : {(int)timeInMin}:{(int)timeInSec} / {(int)allocTimeInMin}:{allocTimeinSec}";
+            timerText.color = timeColor.Evaluate(timer / allocatedTime);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && playing)
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void SetAllocatedTime(float allocatedTime)
     {
+        timer = 0f;
         this.allocatedTime = allocatedTime;
     }
 
@@ -123,8 +127,13 @@ public class GameManager : MonoBehaviour
 
     public void RandomRoom()
     {
-        Random.InitState(DateTime.Now.Millisecond);
         string[] subjects = SaveManager.instance.GetSubjectFiles();
+
+        if (subjects.Length == 0)
+        {
+            Debug.Log("NO");
+            return;
+        }
 
         string subject = subjects[Random.Range(0, subjects.Length)].Replace($"{GameManager.instance.GetDesktopPath()}", "");
 
@@ -178,13 +187,21 @@ public class GameManager : MonoBehaviour
         PasswordManager.instance.Reset();
     }
 
+    public void Settings()
+    {
+        mainMenuUI.SetActive(false);
+        settingsUI.SetActive(true);
+    }
+
     public void Interact()
     {
+        KeyListeners.instance.inView = true;
         gamePlayPanel.SetActive(false);
     }
 
     public void UnInteract()
     {
+        KeyListeners.instance.inView = false;
         gamePlayPanel.SetActive(true);
     }
 
@@ -225,18 +242,43 @@ public class GameManager : MonoBehaviour
         gamePlayPanel.SetActive(true);
     }
 
+    public void Retry()
+    {
+        // SaveManager.instance.subjectName.text = subjectName;
+        // SaveManager.instance.saveName.text = roomName;
+        if (String.IsNullOrEmpty(subjectName) || string.IsNullOrEmpty(roomName))
+        {
+            SaveSystem.instance.InvokeLoad();
+            CreateGame();
+            UnPauseGame();
+            return;
+        }
+
+        RunGame();
+        SaveSystem.instance.Load();
+        UnPauseGame();
+    }
+
     public void BackToMenu()
     {
         PlayerPrefs.SetInt("Admin", 0);
         pausePanel.SetActive(false);
         startContentsUI.SetActive(false);
         adminUISettings.SetActive(false);
+        settingsUI.SetActive(false);
         mainMenuUI.SetActive(true);
     }
 
     public void QuitGame()
     {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = QuitForReal;
+    }
+
+    public bool QuitForReal()
+    {
         Application.Quit();
+        return true;
     }
 
     public void EndGame()
@@ -314,6 +356,18 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(false);
     }
 
+    public void BackToMainMenu()
+    {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = MainMenu;
+    }
+
+    public bool MainMenu()
+    {
+        EndGame();
+        return true;
+    }
+
     public void FinishRoom()
     {
         environment.SetActive(false);
@@ -322,7 +376,7 @@ public class GameManager : MonoBehaviour
         savePanel.SetActive(false);
         endPanel.SetActive(true);
 
-        EndPanelScript.instance.GetValues();
+        string playerData = EndPanelScript.instance.GetValues();
 
         AudioManager.instance.StartTheme("LittleIdea");
 
@@ -330,5 +384,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(save.gameObject);
         }
+        CreateSaveData(playerData);
+    }
+
+    public void CreateSaveData(string data)
+    {
+        SaveSystem.instance.WritePlayerData(GetDesktopPath() + "PlayerData.txt", data);
     }
 }

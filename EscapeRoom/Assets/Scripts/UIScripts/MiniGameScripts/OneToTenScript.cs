@@ -73,6 +73,8 @@ public class OneToTenScript : MonoBehaviour
     public void CreateTask()
     {
         counter = 0;
+        Random.InitState(DateTime.Now.Millisecond);
+
         for (int i = 0; i < content.childCount; i++)
         {
             Destroy(content.GetChild(i).gameObject);
@@ -90,7 +92,6 @@ public class OneToTenScript : MonoBehaviour
         int[] numbers = values;
         for (int i = 0; i < numbers.Length; i++)
         {
-            Random.InitState(DateTime.Now.Millisecond);
             int random = Random.Range(0, values.Length);
 
             int temp = numbers[i];
@@ -129,7 +130,7 @@ public class OneToTenScript : MonoBehaviour
 
     private IEnumerator ChangeValues()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         CreateTask();
     }
 
@@ -141,8 +142,8 @@ public class OneToTenScript : MonoBehaviour
 
     public void Close()
     {
+        GameManager.instance.UnInteract();
         game2Script?.Close();
-        Destroy(gameObject);
     }
 
 }

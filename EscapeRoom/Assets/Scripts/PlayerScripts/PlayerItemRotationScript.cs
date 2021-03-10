@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
 
 public class PlayerItemRotationScript : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerItemRotationScript : MonoBehaviour
     public static PlayerItemRotationScript instance;
 
     public Transform flashLight;
+    public Light2D light2D;
     public float objectRotationSpeed = 5f;
 
     private Camera cam;
@@ -20,6 +22,8 @@ public class PlayerItemRotationScript : MonoBehaviour
 
     private void Start()
     {
+        light2D.intensity = GameManager.instance.GetCreatorMode() ? 0.15f : 0.75f;
+
         cam = Camera.main;
         playerSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }

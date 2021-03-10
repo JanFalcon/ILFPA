@@ -68,27 +68,27 @@ public class DragScript : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                Destroy(gameObject);
+                keyListener.DestroyObject(gameObject);
             }
         }
     }
 
     private void OnMouseEnter()
     {
-        if (highlightScript)
+        if (highlightScript && !keyListener.GetDragging())
         {
             highlightScript.Highlight(true);
+            keyListener?.SetDragScript(this);
         }
-        keyListener.SetDragScript(this);
     }
 
     private void OnMouseExit()
     {
-        if (highlightScript)
+        if (highlightScript && !keyListener.GetDragging())
         {
             highlightScript.Highlight(false);
+            keyListener?.RemoveDragScript();
         }
-        keyListener.RemoveDragScript();
     }
 
     // private void OnMouseDown()

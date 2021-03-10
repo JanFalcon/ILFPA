@@ -19,7 +19,7 @@ public class FinishRoomScript : MonoBehaviour, IInteractable
 
     public void OpenDoor()
     {
-        GetComponent<SpriteRenderer>().sortingOrder -= 100;
+        GetComponent<SpriteRenderer>().sortingOrder -= 200;
     }
 
     //Interface
@@ -35,6 +35,9 @@ public class FinishRoomScript : MonoBehaviour, IInteractable
         {
             GameManager.instance.FinishRoom();
         }
+
+        GameManager.instance.UnInteract();
+        PlayerInteract.instance.Close();
     }
 
     public void Close()

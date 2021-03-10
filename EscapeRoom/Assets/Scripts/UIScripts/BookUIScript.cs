@@ -18,13 +18,12 @@ public class BookUIScript : MonoBehaviour
             buttons.SetActive(false);
             inputField.interactable = false;
         }
-        GameManager.instance.Interact();
         this.bookScript = bookScript;
     }
 
     public void SaveText()
     {
-        if (bookScript) 
+        if (bookScript)
         {
             bookScript.SetTextBody(inputField.text);
             Close();

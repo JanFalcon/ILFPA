@@ -13,8 +13,7 @@ public class LaptopUIScript : MonoBehaviour
 
     public TMP_InputField questionField, answerField;
 
-    public TextMeshProUGUI question;
-    public TMP_InputField answer;
+    public TMP_InputField question, answer;
     private string correctAnswer;
 
     public GameObject buttons;
@@ -62,7 +61,7 @@ public class LaptopUIScript : MonoBehaviour
     {
         TestPanel();
         string[] value = questionnaire.Split('|');
-        this.question.text = value[0];
+        question.text = value[0];
         correctAnswer = value[1];
     }
 
@@ -75,7 +74,6 @@ public class LaptopUIScript : MonoBehaviour
         }
         gameObject.SetActive(true);
         BackToMenu();
-        GameManager.instance.Interact();
         this.laptopScript = laptopScript;
     }
 
@@ -101,7 +99,7 @@ public class LaptopUIScript : MonoBehaviour
 
     public void Save()
     {
-        if(laptopScript.Save(questionField.text, answerField.text))
+        if (laptopScript.Save(questionField.text, answerField.text))
         {
             questionField.text = "";
             answerField.text = "";
@@ -117,7 +115,9 @@ public class LaptopUIScript : MonoBehaviour
 
     public void CheckAnswer()
     {
-        if (answer.text.Contains(correctAnswer) && answer.text != "")
+        correctAnswer = correctAnswer.ToLower();
+        string answerText = answer.text.ToLower();
+        if (answerText.Contains(correctAnswer) && !string.IsNullOrEmpty(answerText))
         {
             audioManager.Play("Correct");
             laptopScript.AddQuestionCtr();

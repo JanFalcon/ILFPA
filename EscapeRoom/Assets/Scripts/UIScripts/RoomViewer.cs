@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 
 public class RoomViewer : MonoBehaviour
 {
+    private Transform canvas;
     public RectTransform contents;
     public TextMeshProUGUI text;
 
@@ -14,6 +16,11 @@ public class RoomViewer : MonoBehaviour
 
     private string fullPath;
     private string subjectPath;
+
+    private void Awake()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+    }
 
     public void SetText(string text, bool admin)
     {
@@ -35,10 +42,17 @@ public class RoomViewer : MonoBehaviour
         GameManager.instance.RunGame();
         SaveSystem.instance.Load();
     }
-
     public void Delete()
+    {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
+    }
+
+    public bool DeleteThis()
     {
         SaveSystem.instance.DeleteFile(fullPath);
         Destroy(gameObject);
+        return true;
     }
+
 }

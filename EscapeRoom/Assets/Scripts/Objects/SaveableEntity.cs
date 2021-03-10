@@ -54,7 +54,7 @@ public class SaveableEntity : MonoBehaviour
 
     public void LoadState(object state)
     {
-        Dictionary<string, object> stateDictionary =  (Dictionary<string, object>)state;
+        Dictionary<string, object> stateDictionary = (Dictionary<string, object>)state;
         foreach (ISaveable saveAble in GetComponents<ISaveable>())
         {
             string typeName = saveAble.GetType().ToString();

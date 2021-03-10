@@ -13,6 +13,7 @@ public class KeyListeners : MonoBehaviour
     private DragScript dragScript;
 
     private bool dragging = false;
+    public bool inView = false;
     private void Awake()
     {
         instance = this;
@@ -21,6 +22,11 @@ public class KeyListeners : MonoBehaviour
 
     private void Update()
     {
+        if (inView)
+        {
+            return;
+        }
+
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
@@ -69,5 +75,16 @@ public class KeyListeners : MonoBehaviour
         {
             dragScript = null;
         }
+    }
+
+    public bool GetDragging()
+    {
+        return dragging;
+    }
+
+    public void DestroyObject(GameObject thisObject)
+    {
+        dragScript = null;
+        Destroy(thisObject);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -38,9 +37,14 @@ public class SaveSystem : MonoBehaviour
 
     }
 
-    public void Load()
+    public void InvokeLoad()
     {
         LoadEvent?.Invoke();
+    }
+
+    public void Load()
+    {
+        InvokeLoad();
         Dictionary<string, object> saveData = LoadFile();
         LoadState(saveData);
     }
@@ -57,6 +61,19 @@ public class SaveSystem : MonoBehaviour
         FileStream file = File.Create(path);
         formatter.Serialize(file, state);
         file.Close();
+    }
+
+    public void WritePlayerData(string path, string data)
+    {
+        if (!File.Exists(path))
+        {
+            FileStream fs = File.Create(path);
+            fs.Close();
+        }
+        StreamWriter writer = new StreamWriter(path);
+
+        writer.WriteLine(data);
+        writer.Close();
     }
 
     public Dictionary<string, object> LoadFile()
@@ -112,8 +129,16 @@ public class SaveSystem : MonoBehaviour
                 }
                 else
                 {
-                    GameObject itemValue = saveManager.LoadObject(gameItem);
-                    itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
+                    try
+                    {
+                        GameObject itemValue = saveManager.LoadObject(gameItem);
+                        itemValue.GetComponent<SaveableEntity>().LoadState(loadState);
+                    }
+                    catch
+                    {
+                        Debug.Log("err");
+                        Debug.Log(gameItem);
+                    }
                 }
             }
         }

@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class QuestionViewer : MonoBehaviour
 {
+    private Transform canvas;
     public RectTransform rectTransform;
     public TextMeshProUGUI text;
-
     private ComputerUIScript computerUI;
+
+    private void Awake()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+    }
     public void SetText(string text, int number, ComputerUIScript computerUI)
     {
         this.computerUI = computerUI;
@@ -21,7 +26,7 @@ public class QuestionViewer : MonoBehaviour
 
         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, textSize.y + 0.5f);
 
-        if(number % 2 == 0)
+        if (number % 2 == 0)
         {
             Color color = GetComponent<Image>().color;
             GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0.5f); ;
@@ -30,9 +35,17 @@ public class QuestionViewer : MonoBehaviour
 
     public void Delete()
     {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
+    }
+
+    public bool DeleteThis()
+    {
         if (computerUI.Delete(text.text))
         {
             Destroy(gameObject);
         }
+        return true;
     }
+
 }

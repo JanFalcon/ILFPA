@@ -34,7 +34,7 @@ public class RoomCreator : MonoBehaviour
 
     public void DisplayInteractables()
     {
-        foreach(Item.GameItem item in learningMaterials)
+        foreach (Item.GameItem item in learningMaterials)
         {
             itemSlotScript = itemCreator.SpawnItem(Item.GameItem.ItemSlot, tab1Contents).GetComponent<ItemSlotScript>();
             itemSlotScript.SetItem(item);

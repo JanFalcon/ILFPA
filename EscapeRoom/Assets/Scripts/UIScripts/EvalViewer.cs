@@ -14,7 +14,7 @@ public class EvalViewer : MonoBehaviour
     public TextMeshProUGUI time;
     public TextMeshProUGUI tries;
 
-    public void SetText(string difficulty, string question, string time, string tries, int number)
+    public string SetText(string difficulty, string question, string time, string tries, int number)
     {
         this.number.text = $"{number + 1}";
         this.difficulty.text = difficulty;
@@ -31,5 +31,7 @@ public class EvalViewer : MonoBehaviour
         {
             GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.15f);
         }
+
+        return $"{this.number.text}. {difficulty}\t{question}\t{time}\t{tries}\n";
     }
 }

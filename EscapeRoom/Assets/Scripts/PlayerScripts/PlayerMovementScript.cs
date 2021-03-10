@@ -21,20 +21,22 @@ public class PlayerMovementScript : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }
 
-    void Start()
-    {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
         isWalking = Animator.StringToHash("isWalking");
 
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        //audioSource.Pause();
-        audioSource.Stop();
 
+        audioSource?.Stop();
+    }
+
+    void Start()
+    {
         CameraFollowScript.instance.SetTarget(transform);
+        AudioManager.instance.AddMixerGroup(audioSource, "PlayerSFX");
     }
 
     void Update()
@@ -42,12 +44,12 @@ public class PlayerMovementScript : MonoBehaviour
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveDirection = direction.normalized * movementSpeed;
 
-        if(direction != Vector2.zero)
+        if (direction != Vector2.zero)
         {
             walkTime += Time.deltaTime;
-            if(walkTime > 0.2f)
+            if (walkTime > 0.2f)
             {
-                audioSource.UnPause();
+                audioSource?.UnPause();
             }
         }
         else
@@ -72,9 +74,13 @@ public class PlayerMovementScript : MonoBehaviour
 
     public void OnDisable()
     {
-        audioSource.Stop();
-        audioSource.Play();
-        audioSource.Pause();
+        if (audioSource == null)
+        {
+            return;
+        }
+        audioSource?.Stop();
+        audioSource?.Play();
+        audioSource?.Pause();
 
         walkTime = 0f;
     }

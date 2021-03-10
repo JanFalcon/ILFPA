@@ -5,7 +5,7 @@ using System;
 
 public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 {
-    private List<string> questionnaires;
+    private List<string> questionnaires, sampleQuestionnaires;
     private List<string> answeredQuestions;
 
     public GameObject computerPanel;
@@ -32,6 +32,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         questionnaires = new List<string>();
+        sampleQuestionnaires = new List<string>();
         answeredQuestions = new List<string>();
     }
 
@@ -65,7 +66,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool Save(float value, string question, string answer)
     {
-        questionnaires.Add($"{value.ToString()}|{question}|{answer}");
+        sampleQuestionnaires.Add($"{value.ToString()}|{question}|{answer.ToLower()}");
         return true;
     }
 
@@ -90,7 +91,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         return CalculateNextQUestion(FuzzyLogic.instance.FuzzyRules(time, tries));
     }
 
-    //TODO: CHANGE CALCULATION!
     public int CalculateNextQUestion(float value)
     {
         float[] fuzzyValues = ListQuestions();
@@ -121,7 +121,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
             fuzzyValues[ctr] = float.Parse(question.Split('|')[0]);
             ctr++;
         }
-        //Array.Sort(fuzzyValues);
         return fuzzyValues;
     }
 
@@ -139,8 +138,13 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         else
         {
             audioManager.Play("Error");
-            Debug.Log("WRONG");
         }
+    }
+
+    public void SampleQuestions()
+    {
+        questionnaires = new List<string>(sampleQuestionnaires);
+        answeredQuestions.Clear();
     }
 
     public void AddAnsweredQuestions(string text)
@@ -184,14 +188,15 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         return questionnaires.ToArray();
     }
 
-    public bool Delete(int number)
+    public bool Delete(int index)
     {
-        questionnaires.RemoveAt(number);
+        questionnaires.RemoveAt(index);
         return true;
     }
 
     public bool Delete(string text)
     {
+        sampleQuestionnaires.Remove(text);
         questionnaires.Remove(text);
         return true;
     }
@@ -273,7 +278,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         return new SaveData
         {
             saveAllocatedTime = (allocatedTime * 60f),
-            questionnaires = this.questionnaires.ToArray(),
+            questionnaires = sampleQuestionnaires.ToArray(),
         };
     }
 
@@ -283,7 +288,7 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
         SaveData saveData = (SaveData)state;
         GameManager.instance.SetAllocatedTime(saveData.saveAllocatedTime);
-        questionnaires = new List<string>(saveData.questionnaires);
+        sampleQuestionnaires = new List<string>(saveData.questionnaires);
         questionCounter = 0;
         time = 0;
         tries = 6;

@@ -10,24 +10,48 @@ public class Item
         ///Write Items here      
         ///Write comments if necessary
         ///Items must be unique
-        //ItemSlot
-        ItemSlot,
 
-        //Interactables
+        // !Player
+        Player = 0,
+
+        //ItemSlot
+        ItemSlot = 1,
+        Confimation = 59,
+        StudyTable = 64,
+
+        // *Interactables
+
+        Computer = 2,
+        Laptop,
+        Game1,
+        Game2,
+        Game3,
+        Game4,
+        Game5,
+        Game6,
+        Game7,
+        Game8,
+        Game9,
+        Game10,     //13
+
         Book,
+        OpenBook,
         Letter,
         GreenBoard,
         BlackBoard,
-        Memo,
+        Memo,       //19
+        WorkTable = 60,
+
+        // *Designs
+
+        RedRag = 20,     //20
+        GreenRag,
+        BlueRag,
+
         Picture,
         RedPainting,
         GreenPainting,
         BluePainting,
-
-        //Designs
-        RedRag,
-        GreenRag,
-        BlueRag,
 
         BookShelf,
         BookShelf1,
@@ -41,42 +65,28 @@ public class Item
 
         MirrorTable,
 
-        Plant,
         Plant1,
         Plant2,
+        Plant3,
 
         Shelf,
 
         SmallChair,
-        SmallShelf,
+        box,
+        box1,
 
         Table,
+        Table2,
+        Table3 = 61,
+        Table4,
 
-        Window,
+        Curtains = 44,
         Window1,
         Window2,
 
         Wall,
-        LeftWall,
-        RightWall,
+        SideWall,
         NewGround,
-
-        //Player
-        Player,
-
-        //UI
-        BookUI,
-        BlackBoardUI,
-        GreenBoardUI,
-        LetterUI,
-
-        Computer,
-        Laptop,
-        Game1,
-        Game2,
-        Game3,
-        Game4,
-        Game5,
 
         tech1,
         tech2,
@@ -87,6 +97,10 @@ public class Item
         Map2,
         Globe1,
         Globe2,
+        Bed,        //58
+
+        Locker = 63,
+        SideWallCollider = 65,
     }
     public GameItem gameItem;
 

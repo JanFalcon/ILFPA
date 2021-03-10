@@ -5,6 +5,7 @@ using TMPro;
 
 public class SubjectViewer : MonoBehaviour
 {
+    private Transform canvas;
     public RectTransform contents;
     public TextMeshProUGUI text;
 
@@ -13,6 +14,10 @@ public class SubjectViewer : MonoBehaviour
     private string path;
     private string subject;
 
+    private void Awake()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+    }
     public void SetText(string text, bool admin)
     {
         deleteButton.SetActive(admin);
@@ -32,7 +37,14 @@ public class SubjectViewer : MonoBehaviour
 
     public void Delete()
     {
+        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
+        confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
+    }
+
+    public bool DeleteThis()
+    {
         SaveSystem.instance.DeleteDirectory(path);
         Destroy(gameObject);
+        return true;
     }
 }
