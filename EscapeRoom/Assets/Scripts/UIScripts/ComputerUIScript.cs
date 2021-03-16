@@ -25,6 +25,8 @@ public class ComputerUIScript : MonoBehaviour
 
     private bool once = false, onceAgain = false;
 
+    private Coroutine questionError, answerError;
+
     private void Start()
     {
         if (!GameManager.instance.GetCreatorMode())
@@ -81,19 +83,43 @@ public class ComputerUIScript : MonoBehaviour
         int difficulty = ButtonRatingScript.instance.GetDifficulty();
         float value = (difficulty - 1) * 25f;
 
-        if (computerScript.Save(value, questionInputField.text, answerInputField.text))
+        string answer = answerInputField.text;
+        answer = answer.Replace(" ", "");
+        if (computerScript.Save(value, questionInputField.text, answer))
         {
             questionInputField.text = "";
             answerInputField.text = "";
+            ButtonRatingScript.instance.ResetValues();
+            AudioManager.instance.Play("Boop");
+            // BackToAdmin();
+            return;
         }
-        ButtonRatingScript.instance.ResetValues();
-        AudioManager.instance.Play("Boop");
-        BackToAdmin();
+
+        AudioManager.instance.Play("Error");
+
+        if (string.IsNullOrWhiteSpace(questionInputField.text))
+        {
+            if (questionError != null)
+            {
+                StopCoroutine(questionError);
+            }
+            questionError = StartCoroutine(Error(0.5f, questionInputField.gameObject.GetComponent<Image>()));
+        }
+        if (string.IsNullOrWhiteSpace(answerInputField.text))
+        {
+            if (answerError != null)
+            {
+                StopCoroutine(answerError);
+            }
+            answerError = StartCoroutine(Error(0.5f, answerInputField.gameObject.GetComponent<Image>()));
+        }
     }
 
-    public float CheckValue(float value)
+    public IEnumerator Error(float seconds, Image image)
     {
-        return value > 0 ? value : 1;
+        image.color = Color.red;
+        yield return new WaitForSeconds(seconds);
+        image.color = Color.white;
     }
 
     public void SetQuestionViewer()

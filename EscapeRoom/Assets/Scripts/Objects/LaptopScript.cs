@@ -53,8 +53,12 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool Save(string question, string answer)
     {
-        questionnaires.Add($"{question}|{answer.ToLower()}");
-        return true;
+        if (!string.IsNullOrWhiteSpace(question) && !string.IsNullOrWhiteSpace(answer))
+        {
+            questionnaires.Add($"{question}|{answer.ToLower()}");
+            return true;
+        }
+        return false;
     }
 
     public void CheckAnswer()
@@ -73,8 +77,7 @@ public class LaptopScript : MonoBehaviour, IInteractable, ISaveable
 
     public string GetQuestionnaire()
     {
-        string value = questionnaires[questionnaireCounter];
-        return value;
+        return questionnaires[questionnaireCounter];
     }
 
     public void AddQuestionCtr()

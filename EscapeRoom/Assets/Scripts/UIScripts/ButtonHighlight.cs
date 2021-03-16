@@ -14,6 +14,8 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private string textBody;
 
     public TextMeshProUGUI descriptionText;
+
+    [TextArea(3, 10)]
     public string description;
 
     private float fontSize;
@@ -59,7 +61,7 @@ public class ButtonHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExit
             text.text = textBody;
             text.fontSize = fontSize;
         }
-            
+
         if (descriptionText)
         {
             descriptionText.text = "";

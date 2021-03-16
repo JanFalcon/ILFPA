@@ -66,8 +66,12 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
 
     public bool Save(float value, string question, string answer)
     {
-        sampleQuestionnaires.Add($"{value.ToString()}|{question}|{answer.ToLower()}");
-        return true;
+        if (!string.IsNullOrWhiteSpace(question) && !string.IsNullOrWhiteSpace(answer))
+        {
+            sampleQuestionnaires.Add($"{value.ToString()}|{question}|{answer.ToLower()}");
+            return true;
+        }
+        return false;
     }
 
     public void SetValues(float time, float tries)
