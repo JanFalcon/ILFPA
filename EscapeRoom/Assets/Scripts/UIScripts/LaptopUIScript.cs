@@ -14,11 +14,18 @@ public class LaptopUIScript : MonoBehaviour
     public TMP_InputField questionField, answerField;
 
     public TMP_InputField question, answer;
-    private string correctAnswer;
+    private List<string> correctAnswers;
 
     public GameObject buttons;
 
     private AudioManager audioManager;
+
+    private Coroutine questionError, answerError;
+
+    private void Awake()
+    {
+        correctAnswers = new List<string>();
+    }
     private void Start()
     {
         audioManager = AudioManager.instance;
@@ -59,10 +66,14 @@ public class LaptopUIScript : MonoBehaviour
 
     public void SetText(string questionnaire)
     {
+        correctAnswers.Clear();
         TestPanel();
         string[] value = questionnaire.Split('|');
         question.text = value[0];
-        correctAnswer = value[1];
+        for (int i = 1; i < value.Length; i++)
+        {
+            correctAnswers.Add(value[i].Replace(" ", ""));
+        }
     }
 
     public void SetLaptopScript(LaptopScript laptopScript)
@@ -99,12 +110,40 @@ public class LaptopUIScript : MonoBehaviour
 
     public void Save()
     {
-        if (laptopScript.Save(questionField.text, answerField.text))
+        if (laptopScript.Save(questionField.text, answerField.text.Replace(" ", "")))
         {
             questionField.text = "";
             answerField.text = "";
+            AudioManager.instance.Play("Boop");
+            //BackToAdmin();
+            return;
         }
-        //BackToAdmin();
+
+        AudioManager.instance.Play("Error");
+
+        if (string.IsNullOrWhiteSpace(questionField.text))
+        {
+            if (questionError != null)
+            {
+                StopCoroutine(questionError);
+            }
+            questionError = StartCoroutine(Error(0.5f, questionField.gameObject.GetComponent<Image>()));
+        }
+        if (string.IsNullOrWhiteSpace(answerField.text))
+        {
+            if (answerError != null)
+            {
+                StopCoroutine(answerError);
+            }
+            answerError = StartCoroutine(Error(0.5f, answerField.gameObject.GetComponent<Image>()));
+        }
+    }
+
+    public IEnumerator Error(float seconds, Image image)
+    {
+        image.color = Color.red;
+        yield return new WaitForSeconds(seconds);
+        image.color = Color.white;
     }
 
     public void Clear()
@@ -115,23 +154,23 @@ public class LaptopUIScript : MonoBehaviour
 
     public void CheckAnswer()
     {
-        correctAnswer = correctAnswer.ToLower();
-        string answerText = answer.text.ToLower();
-        if (answerText.Contains(correctAnswer) && !string.IsNullOrEmpty(answerText))
+        string answerText = answer.text.Replace(" ", "").ToLower();
+        foreach (string correctAnswer in correctAnswers)
         {
-            audioManager.Play("Correct");
-            laptopScript.AddQuestionCtr();
-            laptopScript.CheckAnswer();
+            if (answerText.Contains(correctAnswer.ToLower()) && !string.IsNullOrEmpty(answerText))
+            {
+                audioManager.Play("Correct");
+                laptopScript.AddQuestionCtr();
+                laptopScript.CheckAnswer();
 
-            answer.text = "";
-            answer.Select();
-            answer.ActivateInputField();
-
+                answer.text = "";
+                answer.Select();
+                answer.ActivateInputField();
+                return;
+            }
         }
-        else
-        {
-            audioManager.Play("Error");
-        }
+        Debug.Log("error");
+        audioManager.Play("Error");
     }
 
     public void Close()

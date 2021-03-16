@@ -80,22 +80,29 @@ public class SaveManager : MonoBehaviour
 
     public void Save()
     {
-        if (string.IsNullOrEmpty(subjectName.text) || string.IsNullOrEmpty(saveName.text) || string.IsNullOrEmpty(timerField.text))
+        if (string.IsNullOrWhiteSpace(subjectName.text) || string.IsNullOrWhiteSpace(saveName.text) || string.IsNullOrWhiteSpace(timerField.text))
         {
+            AudioManager.instance.Play("Error");
             //!Show Error 
-            if (string.IsNullOrEmpty(subjectName.text))
+            if (string.IsNullOrWhiteSpace(subjectName.text))
             {
                 StartCoroutine(ErrorWarning(subjectName));
             }
 
-            if (string.IsNullOrEmpty(saveName.text))
+            if (string.IsNullOrWhiteSpace(saveName.text))
             {
                 StartCoroutine(ErrorWarning(saveName));
+            }
+
+            if (string.IsNullOrWhiteSpace(timerField.text))
+            {
+                StartCoroutine(ErrorWarning(timerField));
             }
 
             return;
         }
 
+        AudioManager.instance.Play("Correct");
         GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
         confirm.GetComponent<ConfirmationScript>().MethodOverriding = SaveThis;
     }

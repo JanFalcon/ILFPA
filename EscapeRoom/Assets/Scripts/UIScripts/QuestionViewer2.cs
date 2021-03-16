@@ -18,6 +18,8 @@ public class QuestionViewer2 : MonoBehaviour
     }
     public void SetText(string text, int number, LaptopUIScript laptopUI)
     {
+        text = text.Replace($"{(char)13}", "");
+
         this.laptopUI = laptopUI;
         gameObject.SetActive(true);
 
@@ -36,6 +38,7 @@ public class QuestionViewer2 : MonoBehaviour
 
     public void Delete()
     {
+        AudioManager.instance.Play("Boop");
         GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
         confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
     }

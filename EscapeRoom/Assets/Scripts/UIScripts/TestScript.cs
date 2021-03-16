@@ -13,13 +13,15 @@ public class TestScript : MonoBehaviour
 
     public ComputerUIScript computerUI;
 
-    private string question, answer;
+    private string question;
+    private List<string> correctAnswers;
     private int number = 0;
     private int tries = 0;
 
     private AudioManager audioManager;
     private void Awake()
     {
+        correctAnswers = new List<string>();
         GetProperties();
     }
 
@@ -39,7 +41,11 @@ public class TestScript : MonoBehaviour
         string[] value = questionnaire.Split('|');
         this.number = number;
         question = value[1];
-        answer = value[2];
+        correctAnswers.Clear();
+        for (int i = 2; i < value.Length; i++)
+        {
+            correctAnswers.Add(value[i].Replace(" ", ""));
+        }
         tries = 0;
 
         questionField.text = question;
@@ -48,23 +54,25 @@ public class TestScript : MonoBehaviour
     public void Check()
     {
         tries++;
-        string answerText = answerField.text.ToLower();
-        if (answerText.Contains(answer) && !string.IsNullOrEmpty(answerText))
+        string answerText = answerField.text.Replace(" ", "").ToLower();
+        foreach (string correctAnswer in correctAnswers)
         {
-            audioManager.Play("Correct");
+            if (answerText.Contains(correctAnswer) && !string.IsNullOrEmpty(answerText))
+            {
+                audioManager.Play("Correct");
 
-            computerUI.AddAnsweredQuestions($"{FuzzyLogic.instance.GetDifficulty().ToString()}|{question} / {answer}|{computerUI.GetTime(true)} s|{tries}");
+                computerUI.AddAnsweredQuestions($"{FuzzyLogic.instance.GetDifficulty().ToString()}|{question} / {string.Join(", ", correctAnswers.ToArray())}|{computerUI.GetTime(true)} s|{tries}");
 
-            computerUI.CheckAnswer(number, tries);
-            answerField.text = "";
-            answerField.Select();
-            answerField.ActivateInputField();
+                computerUI.CheckAnswer(number, tries);
+                answerField.text = "";
+                answerField.Select();
+                answerField.ActivateInputField();
+
+                return;
+            }
         }
-        else
-        {
-            audioManager.Play("Error");
-            StartCoroutine(WrongAnswer());
-        }
+        audioManager.Play("Error");
+        StartCoroutine(WrongAnswer());
     }
 
     private IEnumerator WrongAnswer()
