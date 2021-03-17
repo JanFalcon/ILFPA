@@ -271,8 +271,9 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
-        confirm.GetComponent<ConfirmationScript>().MethodOverriding = QuitForReal;
+        ConfirmationScript confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
+        confirm.MethodOverriding = QuitForReal;
+        confirm.SetUp($"Are you sure you want to Quit the Game?");
     }
 
     public bool QuitForReal()
@@ -337,7 +338,7 @@ public class GameManager : MonoBehaviour
 
     public string GetDesktopPath()
     {
-        return $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}/SaveData/";
+        return $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\SaveData\\";
     }
 
     public void PauseGame()
@@ -358,8 +359,9 @@ public class GameManager : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
-        confirm.GetComponent<ConfirmationScript>().MethodOverriding = MainMenu;
+        ConfirmationScript confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
+        confirm.MethodOverriding = MainMenu;
+        confirm.SetUp($"Go back to mainmenu?");
     }
 
     public bool MainMenu()
@@ -380,15 +382,23 @@ public class GameManager : MonoBehaviour
 
         AudioManager.instance.StartTheme("LittleIdea");
 
-        foreach (SaveableEntity save in FindObjectsOfType<SaveableEntity>())
-        {
-            Destroy(save.gameObject);
-        }
+        // foreach (SaveableEntity save in FindObjectsOfType<SaveableEntity>())
+        // {
+        //     Destroy(save.gameObject);
+        // }
         CreateSaveData(playerData);
     }
 
     public void CreateSaveData(string data)
     {
-        SaveSystem.instance.WritePlayerData(GetDesktopPath() + "PlayerData.txt", data);
+        bool success = SaveSystem.instance.WritePlayerData(GetDesktopPath() + "PlayerData.txt", data);
+        if (success)
+        {
+            EndPanelScript.instance.SetSavePath($"Playerdata save at {GetDesktopPath()}PlayerData.txt");
+        }
+        else
+        {
+            EndPanelScript.instance.SetSavePath($"Error saving at {GetDesktopPath()}PlayerData.txt");
+        }
     }
 }

@@ -32,6 +32,6 @@ public class EvalViewer : MonoBehaviour
             GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.15f);
         }
 
-        return $"{this.number.text}. {difficulty}\t{question}\t{time}\t{tries}\n";
+        return $"{this.number.text}. {difficulty}\t{question}\t{time}\t{tries}x";
     }
 }

@@ -43,12 +43,15 @@ public class ObjectSortingOrder : MonoBehaviour, ISaveable
 
     public void UpdateSortingOrder()
     {
-        StartCoroutine(UpdateSortingOrderEnum());
-
-
-        if(col[0] && defaultSortingLayer > 0 && !once)
+        if (!enabled)
         {
-            foreach(Collider2D col in this.col)
+            return;
+        }
+
+        StartCoroutine(UpdateSortingOrderEnum());
+        if (col.Length > 0 && defaultSortingLayer > 0 && !once)
+        {
+            foreach (Collider2D col in this.col)
             {
                 col.isTrigger = true;
             }

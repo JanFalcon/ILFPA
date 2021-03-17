@@ -169,7 +169,13 @@ public class LaptopUIScript : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("error");
+
+        if (answerError != null)
+        {
+            StopCoroutine(answerError);
+        }
+        answerError = StartCoroutine(Error(0.5f, answer.gameObject.GetComponent<Image>()));
+
         audioManager.Play("Error");
     }
 

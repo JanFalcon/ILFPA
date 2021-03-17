@@ -44,8 +44,9 @@ public class RoomViewer : MonoBehaviour
     }
     public void Delete()
     {
-        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
-        confirm.GetComponent<ConfirmationScript>().MethodOverriding = DeleteThis;
+        ConfirmationScript confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
+        confirm.MethodOverriding = DeleteThis;
+        confirm.SetUp($"Are you sure you want to delete this?");
     }
 
     public bool DeleteThis()
