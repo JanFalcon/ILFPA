@@ -44,7 +44,7 @@ public class PlayerMovementScript : MonoBehaviour
         Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveDirection = direction.normalized * movementSpeed;
 
-        if (direction != Vector2.zero)
+        if (direction.sqrMagnitude > 0f)
         {
             walkTime += Time.deltaTime;
             if (walkTime > 0.2f)
@@ -72,16 +72,11 @@ public class PlayerMovementScript : MonoBehaviour
         rb.MovePosition(rb.position + moveDirection * Time.deltaTime);
     }
 
-    public void OnDisable()
+    private void OnDisable()
     {
-        if (audioSource == null)
-        {
-            return;
-        }
         audioSource?.Stop();
         audioSource?.Play();
         audioSource?.Pause();
-
         walkTime = 0f;
     }
 }

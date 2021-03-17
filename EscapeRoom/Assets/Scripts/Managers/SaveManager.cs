@@ -54,7 +54,7 @@ public class SaveManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("ERRORER");
+            Debug.LogError("Fail at saving");
             return null;
         }
     }
@@ -103,8 +103,9 @@ public class SaveManager : MonoBehaviour
         }
 
         AudioManager.instance.Play("Correct");
-        GameObject confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas);
-        confirm.GetComponent<ConfirmationScript>().MethodOverriding = SaveThis;
+        ConfirmationScript confirm = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
+        confirm.MethodOverriding = SaveThis;
+        confirm.SetUp("Confirm Save?");
     }
 
     public bool SaveThis()

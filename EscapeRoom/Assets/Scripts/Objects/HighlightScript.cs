@@ -36,7 +36,7 @@ public class HighlightScript : MonoBehaviour, ISaveable
         }
         else
         {
-            objectSortingOrder.UpdateSortingOrder();
+            objectSortingOrder?.UpdateSortingOrder();
         }
         material?.SetFloat("_Thickness", highlight ? this.highlight : 0f);
     }

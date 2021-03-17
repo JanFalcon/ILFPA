@@ -10,6 +10,7 @@ public class EndPanelScript : MonoBehaviour
     public Transform contents;
     public ComputerScript computerScript;
 
+    public TextMeshProUGUI savePath;
     public TextMeshProUGUI title;
     public TextMeshProUGUI totalTime;
 
@@ -17,15 +18,16 @@ public class EndPanelScript : MonoBehaviour
 
     private void Awake()
     {
-        playerData = "";
         instance = this;
     }
 
     public string GetValues()
     {
-        totalTime.text = $"Total Time : {GameManager.instance.timerText.text.Replace("Timer :", "")}";
+        playerData = "";
+        string time = $"Total Time : {GameManager.instance.timerText.text.Replace("Timer :", "")}";
+        totalTime.text = time;
 
-        playerData = totalTime.text + "\n";
+        playerData = $"{time}\n";
         int ctr = 0;
 
         foreach (string value in computerScript.GetAnsweredQuestions())
@@ -41,7 +43,12 @@ public class EndPanelScript : MonoBehaviour
     public void SetValue(string difficulty, string question, string time, string tries, int number)
     {
         GameObject temp = Instantiate(evaluation, contents) as GameObject;
-        playerData += temp.GetComponent<EvalViewer>().SetText(difficulty, question, time, tries, number);
+        string value = temp.GetComponent<EvalViewer>().SetText(difficulty, question, time, tries, number);
+        playerData += $"{value}\n";
     }
 
+    public void SetSavePath(string text)
+    {
+        savePath.text = text;
+    }
 }

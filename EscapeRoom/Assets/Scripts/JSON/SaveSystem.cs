@@ -8,8 +8,10 @@ public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem instance;
 
+    private Transform canvas;
     private void Awake()
     {
+        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
         if (instance == null)
         {
             instance = this;
@@ -63,18 +65,32 @@ public class SaveSystem : MonoBehaviour
         file.Close();
     }
 
-    public void WritePlayerData(string path, string data)
+    public bool WritePlayerData(string path, string data)
     {
-        if (!File.Exists(path))
+        try
         {
-            FileStream fs = File.Create(path);
-            fs.Close();
-        }
-        StreamWriter writer = new StreamWriter(path);
+            if (!File.Exists(path))
+            {
+                FileStream fs = File.Create(path);
+                fs.Close();
+            }
+            StreamWriter writer = new StreamWriter(path);
 
-        writer.WriteLine(data);
-        writer.Close();
+            writer.WriteLine(data);
+            writer.Close();
+
+            return true;
+        }
+        catch
+        {
+            ConfirmationScript confim = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
+            confim.MethodOverriding = null;
+            confim.SetUp("Error Saving PlayerData");
+            return false;
+        }
     }
+
+
 
     public Dictionary<string, object> LoadFile()
     {
