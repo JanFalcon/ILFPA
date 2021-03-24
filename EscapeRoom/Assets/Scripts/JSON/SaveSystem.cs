@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System.Text;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class SaveSystem : MonoBehaviour
         Dictionary<string, object> saveData = new Dictionary<string, object>();
         CaptureState(saveData);
         SaveFile(saveData);
-
     }
 
     public void InvokeLoad()
@@ -69,28 +69,57 @@ public class SaveSystem : MonoBehaviour
     {
         try
         {
-            if (!File.Exists(path))
+            using (FileStream fs = File.Create(path))
             {
-                FileStream fs = File.Create(path);
-                fs.Close();
+                byte[] info = new UTF8Encoding(true).GetBytes(data);
+                fs.Write(info, 0, info.Length);
             }
-            StreamWriter writer = new StreamWriter(path);
-
-            writer.WriteLine(data);
-            writer.Close();
 
             return true;
         }
         catch
         {
-            ConfirmationScript confim = ItemCreator.instance.SpawnItem(Item.GameItem.Confimation, canvas).GetComponent<ConfirmationScript>();
-            confim.MethodOverriding = null;
-            confim.SetUp("Error Saving PlayerData");
-            return false;
+            try
+            {
+                string newPath = Path.Combine(Application.persistentDataPath, "PlayerData.txt");
+                FileStream fs = File.Create(newPath);
+                byte[] info = new UTF8Encoding(true).GetBytes("data");
+                fs.Write(info, 0, info.Length);
+                fs.Close();
+
+                EndPanelScript.instance.SetSavePath($"Player Data Save at {newPath}");
+                return true;
+            }
+            catch (Exception e)
+            {
+                TextEditor te = new TextEditor();
+                te.text = e.ToString();
+                te.SelectAll();
+                te.Copy();
+
+                return false;
+            }
         }
     }
 
+    [ContextMenu("TEST")]
+    public void MEOW()
+    {
 
+        Debug.Log(path);
+        try
+        {
+            FileStream fs = File.Create(path);
+            byte[] info = new UTF8Encoding(true).GetBytes("data");
+            fs.Write(info, 0, info.Length);
+            fs.Close();
+            Debug.Log("SUCCESS");
+        }
+        catch
+        {
+            Debug.Log("ERROR");
+        }
+    }
 
     public Dictionary<string, object> LoadFile()
     {
@@ -105,14 +134,16 @@ public class SaveSystem : MonoBehaviour
         try
         {
             object save = formatter.Deserialize(file);
-            file.Close();
             return (Dictionary<string, object>)save;
         }
         catch
         {
             Debug.Log("Failed to load file at " + path);
-            file.Close();
             return new Dictionary<string, object>();
+        }
+        finally
+        {
+            file?.Close();
         }
     }
 

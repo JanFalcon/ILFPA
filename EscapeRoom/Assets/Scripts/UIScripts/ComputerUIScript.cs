@@ -197,9 +197,9 @@ public class ComputerUIScript : MonoBehaviour
         return computerScript.Delete(number);
     }
 
-    public bool Delete(string text)
+    public bool DeleteThis(int number)
     {
-        return computerScript.Delete(text);
+        return computerScript.DeleteThis(number);
     }
 
     public void CloseAll()
