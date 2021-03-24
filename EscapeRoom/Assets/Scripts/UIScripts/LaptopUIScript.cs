@@ -72,7 +72,7 @@ public class LaptopUIScript : MonoBehaviour
         question.text = value[0];
         for (int i = 1; i < value.Length; i++)
         {
-            correctAnswers.Add(value[i].Replace(" ", ""));
+            correctAnswers.Add(value[i].Trim());
         }
     }
 
@@ -110,7 +110,9 @@ public class LaptopUIScript : MonoBehaviour
 
     public void Save()
     {
-        if (laptopScript.Save(questionField.text, answerField.text.Replace(" ", "")))
+        string answer = answerField.text.Replace(" ", "");
+        answer = answer.Trim();
+        if (laptopScript.Save(questionField.text, answer))
         {
             questionField.text = "";
             answerField.text = "";
@@ -154,7 +156,8 @@ public class LaptopUIScript : MonoBehaviour
 
     public void CheckAnswer()
     {
-        string answerText = answer.text.Replace(" ", "").ToLower();
+        string answerText = answer.text.ToLower().Trim();
+        answerText = answerText.Replace(" ", "");
         foreach (string correctAnswer in correctAnswers)
         {
             if (answerText.Contains(correctAnswer.ToLower()) && !string.IsNullOrEmpty(answerText))

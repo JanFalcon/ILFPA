@@ -44,19 +44,25 @@ public class TestScript : MonoBehaviour
         correctAnswers.Clear();
         for (int i = 2; i < value.Length; i++)
         {
-            correctAnswers.Add(value[i].Replace(" ", ""));
+            string temp = value[i].ToLower().Trim();
+            temp = temp.Replace(" ", "");
+            correctAnswers.Add(temp);
         }
         tries = 0;
-
+        // Debug.Log(string.Join(", ", correctAnswers.ToArray()));
         questionField.text = question;
     }
 
     public void Check()
     {
         tries++;
-        string answerText = answerField.text.Replace(" ", "").ToLower();
+        string answerText = answerField.text.ToLower().Trim();
+        answerText = answerText.Replace(" ", "");
         foreach (string correctAnswer in correctAnswers)
         {
+            // Debug.Log(string.Compare(answerText, correctAnswer));
+            // Debug.Log(answerText.Length);
+            // Debug.Log(correctAnswer.Length);
             if (answerText.Contains(correctAnswer) && !string.IsNullOrEmpty(answerText))
             {
                 audioManager.Play("Correct");

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using System;
+using System.IO;
 using UnityEngine.SceneManagement;
 using UnityEngine.Experimental.Rendering.Universal;
 using Random = UnityEngine.Random;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuUI, startContentsUI, adminUISettings, settingsUI;
 
     public GameObject gamePlayPanel, savePanel, endPanel, pausePanel;
+    private GameObject pauseUI;
 
     public GameObject gameChooser, subjectViewer, subjectViewerContents, subjectButton;
 
@@ -338,7 +340,9 @@ public class GameManager : MonoBehaviour
 
     public string GetDesktopPath()
     {
+        string desktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SaveData");
         return $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\SaveData\\";
+        // return desktopPath;
     }
 
     public void PauseGame()
@@ -346,7 +350,9 @@ public class GameManager : MonoBehaviour
         pause = true;
         Time.timeScale = 0;
         Interact();
-        pausePanel.SetActive(true);
+        pauseUI = Instantiate(pausePanel, canvas);
+        pauseUI.SetActive(true);
+        // pausePanel.SetActive(true);
     }
 
     public void UnPauseGame()
@@ -354,7 +360,10 @@ public class GameManager : MonoBehaviour
         pause = false;
         Time.timeScale = 1;
         UnInteract();
-        pausePanel.SetActive(false);
+        if (pauseUI)
+        {
+            Destroy(pauseUI);
+        }
     }
 
     public void BackToMainMenu()
@@ -398,7 +407,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            EndPanelScript.instance.SetSavePath($"Error saving at {GetDesktopPath()}PlayerData.txt");
+            EndPanelScript.instance.SetSavePath($"Error Saving : Access denied");
         }
     }
 }

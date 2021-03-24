@@ -198,11 +198,10 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         return true;
     }
 
-    public bool Delete(string text)
+    public bool DeleteThis(int index)
     {
-        sampleQuestionnaires.Remove(text);
-        questionnaires.Remove(text);
-        return true;
+        sampleQuestionnaires.RemoveAt(index);
+        return Delete(index);
     }
 
     public bool CheckLaptopsStatus()
@@ -305,4 +304,6 @@ public class ComputerScript : MonoBehaviour, IInteractable, ISaveable
         public float saveAllocatedTime;
         public string[] questionnaires;
     }
+
+
 }

@@ -10,7 +10,7 @@ public class QuestionViewer : MonoBehaviour
     public RectTransform rectTransform;
     public TextMeshProUGUI text;
     private ComputerUIScript computerUI;
-
+    private int number;
     private void Awake()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
@@ -21,7 +21,7 @@ public class QuestionViewer : MonoBehaviour
 
         this.computerUI = computerUI;
         gameObject.SetActive(true);
-
+        this.number = number;
         this.text.text = text;
         this.text.ForceMeshUpdate();
         Vector2 textSize = this.text.GetRenderedValues();
@@ -45,10 +45,11 @@ public class QuestionViewer : MonoBehaviour
 
     public bool DeleteThis()
     {
-        if (computerUI.Delete(text.text))
+        if (computerUI.DeleteThis(number))
         {
             Destroy(gameObject);
         }
+        computerUI.SetQuestionViewer();
         return true;
     }
 
